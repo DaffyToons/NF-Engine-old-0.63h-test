@@ -2952,7 +2952,7 @@ class PlayState extends MusicBeatState
 			iconP1.swapOldIcon();
 		}*/
 		callOnLuas('onUpdate', [elapsed]);        
-		/*
+	
 		switch (curStage)
 		{
 			case 'tank':
@@ -3082,7 +3082,6 @@ class PlayState extends MusicBeatState
 					}
 				}
 		}
-		*/
 		
 		
 			var balls = notesHitArray.length - 1;
