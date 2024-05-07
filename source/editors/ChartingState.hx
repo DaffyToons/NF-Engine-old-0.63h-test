@@ -2038,13 +2038,17 @@ class ChartingState extends MusicBeatState
 			if (tipsClose)
 			    {
 			    for (tipText in tipTextGroup) tipText.visible = false;
+			    #if android
 			    _virtualpad.alpha = 1;
+			    #end
 			    }
 			    
             else
                 {
                 for (tipText in tipTextGroup) tipText.visible = true;
+		#if android
                 _virtualpad.alpha = 0.5;
+		#end
                 }
                 
 
@@ -2056,7 +2060,7 @@ class ChartingState extends MusicBeatState
 				var holdingShift:Float = 1;
 				if (FlxG.keys.pressed.CONTROL) holdingShift = 0.25;
 				else if (FlxG.keys.pressed.SHIFT #if android || _virtualpad.buttonC.pressed #end) holdingShift = 4;
-                else if (_virtualpad.buttonX.pressed) holdingShift = 10;
+                #if android else if (_virtualpad.buttonX.pressed) holdingShift = 10; #end
 				var daTime:Float = 700 * FlxG.elapsed * holdingShift;
 
 				if (FlxG.keys.pressed.W #if android || _virtualpad.buttonUp.pressed #end)
