@@ -72,10 +72,10 @@ import sys.FileSystem;
 import sys.io.File;
 #end
 
-#if android
-import VideoHandler as MP4Handler;
-#else
+#if windows
 import vlc.MP4Handler;
+#else
+import VideoHandler as MP4Handler;
 #end
 
 using StringTools;
