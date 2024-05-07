@@ -72,9 +72,11 @@ import sys.FileSystem;
 import sys.io.File;
 #end
 
-#if VIDEOS_ALLOWED
+#if android
 import VideoHandler as MP4Handler;
-#end
+#else
+import vlc.MP4Handler;
+end
 
 using StringTools;
 
