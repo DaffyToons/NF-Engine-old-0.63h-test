@@ -3162,12 +3162,12 @@ class PlayState extends MusicBeatState
 				openPauseMenu();
 			}
 		}
-        /*
+
 		if (FlxG.keys.anyJustPressed(debugKeysChart) && !endingSong && !inCutscene)
 		{
 			openChartEditor();
 		}
-        */
+
 		// FlxG.watch.addQuick('VOL', vocals.amplitudeLeft);
 		// FlxG.watch.addQuick('VOLRight', vocals.amplitudeRight);
 
@@ -3197,14 +3197,13 @@ class PlayState extends MusicBeatState
 		else
 			iconP2.animation.curAnim.curFrame = 0;
             
-        /*    
 		if (FlxG.keys.anyJustPressed(debugKeysCharacter) && !endingSong && !inCutscene) {
 			persistentUpdate = false;
 			paused = true;
 			cancelMusicFadeTween();
 			MusicBeatState.switchState(new CharacterEditorState(SONG.player2));
 		}
-		*/
+
 		if (startedCountdown)
 		{
 			Conductor.songPosition += FlxG.elapsed * 1000 * playbackRate;
