@@ -351,12 +351,7 @@ class ModsMenuState extends MusicBeatState
 		FlxG.mouse.visible = true;
 
         #if mobile
-        #if ios
-        if (ClientPrefs.touchmenus)
-            addVirtualPad(NONE, B);
-        #end
-        if (!ClientPrefs.touchmenus)
-            addVirtualPad(UP_DOWN, B);
+        addVirtualPad(UP_DOWN, B);
         #end
 
 		super.create();
@@ -442,7 +437,7 @@ class ModsMenuState extends MusicBeatState
 			noModsTxt.alpha = 1 - Math.sin((Math.PI * noModsSine) / 180);
 		}
 
-		if(canExit && controls.BACK #if android || canExit && ClientPrefs.touchmenus && FlxG.android.justReleased.BACK #end #if mobile || canExit && ClientPrefs.touchmenus && SwipeUtil.swipeRight #end )
+		if(canExit && controls.BACK)
 		{
 			if(colorTween != null) {
 				colorTween.cancel();
@@ -469,12 +464,12 @@ class ModsMenuState extends MusicBeatState
 			}
 		}
 
-		if(controls.UI_UP_P ||  ClientPrefs.touchmenus && SwipeUtil.swipeUp && !noModsTxt.visible)
+		if(controls.UI_UP_P)
 		{
 			changeSelection(-1);
 			FlxG.sound.play(Paths.sound('scrollMenu'));
 		}
-		if(controls.UI_DOWN_P || ClientPrefs.touchmenus && SwipeUtil.swipeDown && !noModsTxt.visible)
+		if(controls.UI_DOWN_P)
 		{
 			changeSelection(1);
 			FlxG.sound.play(Paths.sound('scrollMenu'));
