@@ -202,10 +202,13 @@ class OptionsState extends MusicBeatState
 		if (_virtualpad.buttonX.justPressed) {
 			FlxTransitionableState.skipNextTransIn = true;
 			FlxTransitionableState.skipNextTransOut = true;
+			removeVirtualPad();
+			persistentUpdate = false;
 			MusicBeatState.switchState(new android.AndroidControlsMenu());
 		}
 		if (_virtualpad.buttonY.justPressed) {
 			removeVirtualPad();
+			persistentUpdate = false;
 			openSubState(new android.HitboxSettingsSubState());
 		}
 		#end
