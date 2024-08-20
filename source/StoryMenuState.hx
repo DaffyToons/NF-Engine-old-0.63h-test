@@ -450,7 +450,7 @@ class StoryMenuState extends MusicBeatState
 		else
 			curDifficulty = 0;
 
-		var newPos:Int = Difficulty.list.indexOf(lastDifficultyName);;
+		var newPos:Int = Difficulty.list.indexOf(lastDifficultyName);
 		//trace('Pos of ' + lastDifficultyName + ' is ' + newPos);
 		if(newPos > -1)
 		{
