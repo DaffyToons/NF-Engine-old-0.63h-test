@@ -3,7 +3,7 @@ package;
 #if desktop
 import Discord.DiscordClient;
 #end
-import flash.text.TextField;
+import openfl.text.TextField;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.addons.display.FlxGridOverlay;
@@ -22,11 +22,10 @@ import sys.FileSystem;
 import haxe.Json;
 import haxe.format.JsonParser;
 import openfl.display.BitmapData;
-import flash.geom.Rectangle;
+import openfl.geom.Rectangle;
 import flixel.ui.FlxButton;
 import flixel.FlxBasic;
 import sys.io.File;
-import flixel.addons.display.FlxBackdrop;
 /*import haxe.zip.Reader;
 import haxe.zip.Entry;
 import haxe.zip.Uncompress;
@@ -64,18 +63,6 @@ class ModsMenuState extends MusicBeatState
 
 	var visibleWhenNoMods:Array<FlxBasic> = [];
 	var visibleWhenHasMods:Array<FlxBasic> = [];
-	
-	var bgMove:FlxBackdrop;
-	var ColorArray:Array<Int> = [
-		0xFF9400D3,
-		0xFF4B0082,
-		0xFF0000FF,
-		0xFF00FF00,
-		0xFFFFFF00,
-		0xFFFF7F00,
-		0xFFFF0000
-	                                
-	    ];
 
 	override function create()
 	{
@@ -92,15 +79,6 @@ class ModsMenuState extends MusicBeatState
 		bg.antialiasing = ClientPrefs.globalAntialiasing;
 		add(bg);
 		bg.screenCenter();
-		
-		bgMove = new FlxBackdrop(Paths.image('mainmenu_sprite/backdrop'), 1, 1, true, true, 0, 0);
-		//bgMove.scrollFactor.set();
-		bgMove.alpha = 0.1;
-		bgMove.color = ColorArray[MainMenuState.currentColor];
-		bgMove.screenCenter();
-		bgMove.velocity.set(FlxG.random.bool(50) ? 90 : -90, FlxG.random.bool(50) ? 90 : -90);
-		//bgMove.antialiasing = ClientPrefs.globalAntialiasing;
-		add(bgMove);
 
 		noModsTxt = new FlxText(0, 0, FlxG.width, "NO MODS INSTALLED\nPRESS BACK TO EXIT AND INSTALL A MOD", 48);
 		if(FlxG.random.bool(0.1)) noModsTxt.text += '\nBITCH.'; //meanie
@@ -372,9 +350,14 @@ class ModsMenuState extends MusicBeatState
 
 		FlxG.mouse.visible = true;
 
-                #if android
-                addVirtualPad(UP_DOWN, B);
-                #end
+        #if mobile
+        #if ios
+        if (ClientPrefs.touchmenus)
+            addVirtualPad(NONE, B);
+        #end
+        if (!ClientPrefs.touchmenus)
+            addVirtualPad(UP_DOWN, B);
+        #end
 
 		super.create();
 	}
@@ -459,7 +442,7 @@ class ModsMenuState extends MusicBeatState
 			noModsTxt.alpha = 1 - Math.sin((Math.PI * noModsSine) / 180);
 		}
 
-		if(canExit && controls.BACK)
+		if(canExit && controls.BACK #if android || canExit && ClientPrefs.touchmenus && FlxG.android.justReleased.BACK #end #if mobile || canExit && ClientPrefs.touchmenus && SwipeUtil.swipeRight #end )
 		{
 			if(colorTween != null) {
 				colorTween.cancel();
@@ -486,12 +469,12 @@ class ModsMenuState extends MusicBeatState
 			}
 		}
 
-		if(controls.UI_UP_P)
+		if(controls.UI_UP_P ||  ClientPrefs.touchmenus && SwipeUtil.swipeUp && !noModsTxt.visible)
 		{
 			changeSelection(-1);
 			FlxG.sound.play(Paths.sound('scrollMenu'));
 		}
-		if(controls.UI_DOWN_P)
+		if(controls.UI_DOWN_P || ClientPrefs.touchmenus && SwipeUtil.swipeDown && !noModsTxt.visible)
 		{
 			changeSelection(1);
 			FlxG.sound.play(Paths.sound('scrollMenu'));
@@ -725,7 +708,7 @@ class ModMetadata
 					this.name = pack.folder;
 			}
 
-			if(pack.description != null && pack.description.length > 0)
+            if(pack.description != null && pack.description.length > 0)
 			{
 				if(pack.description != 'Description')
 					this.description = pack.description;

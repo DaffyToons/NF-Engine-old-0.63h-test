@@ -41,7 +41,7 @@ class Mods
 		globalMods = [];
 		for(mod in parseList().enabled)
 		{
-			var pack:Dynamic = getPack(mod);
+			var pack:Dynamic = getPack(SUtil.getPath() + mod);
 			if(pack != null && pack.runsGlobally) globalMods.push(mod);
 		}
 		return globalMods;
@@ -84,7 +84,7 @@ class Mods
 		var list:ModsList = {enabled: [], disabled: [], all: []};
 
 		try {
-			for (mod in CoolUtil.coolTextFile('modsList.txt'))
+			for (mod in CoolUtil.coolTextFile(SUtil.getPath() + 'modsList.txt'))
 			{
 				//trace('Mod: $mod');
 				var dat = mod.split("|");
