@@ -3,7 +3,6 @@ package;
 import WeekData;
 import Highscore;
 import Song;
-
 import DiffCalc;
 import Difficulty;
 
