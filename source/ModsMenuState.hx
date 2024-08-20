@@ -413,7 +413,6 @@ class ModsMenuState extends MusicBeatState
 		}
 		return arr;
 	}*/
-	
 	function addToModsList(values:Array<Dynamic>)
 	{
 		for (i in 0...modsList.length)
@@ -486,7 +485,7 @@ class ModsMenuState extends MusicBeatState
 
 		var path:String = SUtil.getPath() + 'modsList.txt';
 		File.saveContent(path, fileStr);
-		Mods.pushGlobalMods();
+		Paths.pushGlobalMods();
 	}
 
 	var noModsSine:Float = 0;
@@ -754,29 +753,53 @@ class ModMetadata
 		this.restart = false;
 
 		//Try loading json
-		var pack:Dynamic = Mods.getPack(folder);
-		if(pack != null) {
-			//using reflects cuz for some odd reason my haxe hates the stuff.var shit
-			if(pack.name != null && pack.name.length > 0)
-			{
-				if(pack.name != 'Name')
-					this.name = pack.name;
-				else
-					this.name = pack.folder;
-			}
+		var path = Paths.mods(folder + '/pack.json');
+		if(FileSystem.exists(path)) {
+			var rawJson:String = File.getContent(path);
+			if(rawJson != null && rawJson.length > 0) {
+				var stuff:Dynamic = Json.parse(rawJson);
+					//using reflects cuz for some odd reason my haxe hates the stuff.var shit
+					var colors:Array<Int> = Reflect.getProperty(stuff, "color");
+					var description:String = Reflect.getProperty(stuff, "description");
+					var name:String = Reflect.getProperty(stuff, "name");
+					var restart:Bool = Reflect.getProperty(stuff, "restart");
 
-			if(pack.description != null && pack.description.length > 0)
-			{
-				if(pack.description != 'Description')
-					this.description = pack.description;
-				else
+				if(name != null && name.length > 0)
+				{
+					this.name = name;
+				}
+				if(description != null && description.length > 0)
+				{
+					this.description = description;
+				}
+				if(name == 'Name')
+				{
+					this.name = folder;
+				}
+				if(description == 'Description')
+				{
 					this.description = "No description provided.";
+				}
+				if(colors != null && colors.length > 2)
+				{
+					this.color = FlxColor.fromRGB(colors[0], colors[1], colors[2]);
+				}
+
+				this.restart = restart;
+				/*
+				if(stuff.name != null && stuff.name.length > 0)
+				{
+					this.name = stuff.name;
+				}
+				if(stuff.description != null && stuff.description.length > 0)
+				{
+					this.description = stuff.description;
+				}
+				if(stuff.color != null && stuff.color.length > 2)
+				{
+					this.color = FlxColor.fromRGB(stuff.color[0], stuff.color[1], stuff.color[2]);
+				}*/
 			}
-
-			if(pack.colors != null && pack.colors.length > 2)
-				this.color = FlxColor.fromRGB(pack.colors[0], pack.colors[1], pack.colors[2]);
-
-			this.restart = pack.restart;
 		}
 	}
 }

@@ -15,7 +15,6 @@ class Highscore
 	public static var songScores:Map<String, Int> = new Map<String, Int>();
 	public static var songRating:Map<String, Float> = new Map<String, Float>();
 	#end
-	public static var songTimes:Map<String, String> = new Map<String, String>();
 
 
 	public static function resetSong(song:String, diff:Int = 0):Void
@@ -104,7 +103,7 @@ class Highscore
 
 	public static function formatSong(song:String, diff:Int):String
 	{
-		return Paths.formatToSongPath(song) + Difficulty.getFilePath(diff);
+		return Paths.formatToSongPath(song) + CoolUtil.getDifficultyFilePath(diff);
 	}
 
 	public static function getScore(song:String, diff:Int):Int
@@ -114,14 +113,6 @@ class Highscore
 			setScore(daSong, 0);
 
 		return songScores.get(daSong);
-	}
-	
-	static function setTime(song:String, time:String):Void
-	{
-		// Reminder that I don't need to format this song, it should come formatted!
-		songTimes.set(song, time);
-		FlxG.save.data.songTimes = songTimes;
-		FlxG.save.flush();
 	}
 
 	public static function getRating(song:String, diff:Int):Float
@@ -141,15 +132,6 @@ class Highscore
 
 		return weekScores.get(daWeek);
 	}
-	
-	public static function getTime(song:String, diff:Int):String
-	{
-		var daSong:String = formatSong(song, diff);
-		if (!songScores.exists(daSong) || songTimes.get(daSong) == '' || songTimes.get(daSong) == null){
-			setTime(daSong, 'N/A');			
-        }
-		return songTimes.get(daSong);
-	}
 
 	public static function load():Void
 	{
@@ -164,10 +146,6 @@ class Highscore
 		if (FlxG.save.data.songRating != null)
 		{
 			songRating = FlxG.save.data.songRating;
-		}
-		if (FlxG.save.data.songTimes != null)
-		{
-			songTimes = FlxG.save.data.songTimes;
 		}
 	}
 }

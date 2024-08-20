@@ -102,7 +102,7 @@ class TitleState extends MusicBeatState
 		Paths.clearUnusedMemory();
 
 		#if LUA_ALLOWED
-		Mods.pushGlobalMods();
+		Paths.pushGlobalMods();
 		#end
 		// Just to load a mod on start up if ya got one. For mods that change the menu music and bg
 
@@ -338,7 +338,7 @@ class TitleState extends MusicBeatState
 
 		titleText = new FlxSprite(titleJSON.startx, titleJSON.starty);
 		#if (desktop || android && MODS_ALLOWED)
-		var path = SUtil.getPath() + "mods/" + Mods.currentModDirectory + "/images/titleEnter.png";
+		var path = SUtil.getPath() + "mods/" + Paths.currentModDirectory + "/images/titleEnter.png";
 		//trace(path, FileSystem.exists(path));
 		if (!FileSystem.exists(path)){
 			path = SUtil.getPath() + "mods/images/titleEnter.png";
