@@ -3,7 +3,7 @@ package;
 #if desktop
 import Discord.DiscordClient;
 #end
-import openfl.text.TextField;
+import flash.text.TextField;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.addons.display.FlxGridOverlay;
@@ -22,10 +22,11 @@ import sys.FileSystem;
 import haxe.Json;
 import haxe.format.JsonParser;
 import openfl.display.BitmapData;
-import openfl.geom.Rectangle;
+import flash.geom.Rectangle;
 import flixel.ui.FlxButton;
 import flixel.FlxBasic;
 import sys.io.File;
+import flixel.addons.display.FlxBackdrop;
 /*import haxe.zip.Reader;
 import haxe.zip.Entry;
 import haxe.zip.Uncompress;
@@ -63,6 +64,18 @@ class ModsMenuState extends MusicBeatState
 
 	var visibleWhenNoMods:Array<FlxBasic> = [];
 	var visibleWhenHasMods:Array<FlxBasic> = [];
+	
+	var bgMove:FlxBackdrop;
+	var ColorArray:Array<Int> = [
+		0xFF9400D3,
+		0xFF4B0082,
+		0xFF0000FF,
+		0xFF00FF00,
+		0xFFFFFF00,
+		0xFFFF7F00,
+		0xFFFF0000
+	                                
+	    ];
 
 	override function create()
 	{
@@ -79,6 +92,15 @@ class ModsMenuState extends MusicBeatState
 		bg.antialiasing = ClientPrefs.globalAntialiasing;
 		add(bg);
 		bg.screenCenter();
+		
+		bgMove = new FlxBackdrop(Paths.image('mainmenu_sprite/backdrop'), 1, 1, true, true, 0, 0);
+		//bgMove.scrollFactor.set();
+		bgMove.alpha = 0.1;
+		bgMove.color = ColorArray[MainMenuState.currentColor];
+		bgMove.screenCenter();
+		bgMove.velocity.set(FlxG.random.bool(50) ? 90 : -90, FlxG.random.bool(50) ? 90 : -90);
+		//bgMove.antialiasing = ClientPrefs.globalAntialiasing;
+		add(bgMove);
 
 		noModsTxt = new FlxText(0, 0, FlxG.width, "NO MODS INSTALLED\nPRESS BACK TO EXIT AND INSTALL A MOD", 48);
 		if(FlxG.random.bool(0.1)) noModsTxt.text += '\nBITCH.'; //meanie
@@ -89,8 +111,35 @@ class ModsMenuState extends MusicBeatState
 		noModsTxt.screenCenter();
 		visibleWhenNoMods.push(noModsTxt);
 
-		var list:ModsList = Mods.parseList();
-		for (mod in list.all) modsList.push([mod, list.enabled.contains(mod)]);
+		var path:String = SUtil.getPath() + 'modsList.txt';
+		if(FileSystem.exists(path))
+		{
+			var leMods:Array<String> = CoolUtil.coolTextFile(path);
+			for (i in 0...leMods.length)
+			{
+				if(leMods.length > 1 && leMods[0].length > 0) {
+					var modSplit:Array<String> = leMods[i].split('|');
+					if(!Paths.ignoreModFolders.contains(modSplit[0].toLowerCase()))
+					{
+						addToModsList([modSplit[0], (modSplit[1] == '1')]);
+						//trace(modSplit[1]);
+					}
+				}
+			}
+		}
+
+		// FIND MOD FOLDERS
+		var boolshit = true;
+		if (FileSystem.exists(SUtil.getPath() + "modsList.txt")){
+			for (folder in Paths.getModDirectories())
+			{
+				if(!Paths.ignoreModFolders.contains(folder))
+				{
+					addToModsList([folder, true]); //i like it false by default. -bb //Well, i like it True! -Shadow
+				}
+			}
+		}
+		saveTxt();
 
 		selector = new AttachedSprite();
 		selector.xAdd = -205;
@@ -350,9 +399,9 @@ class ModsMenuState extends MusicBeatState
 
 		FlxG.mouse.visible = true;
 
-        #if mobile
-        addVirtualPad(UP_DOWN, B);
-        #end
+                #if android
+                addVirtualPad(UP_DOWN, B);
+                #end
 
 		super.create();
 	}
@@ -364,6 +413,19 @@ class ModsMenuState extends MusicBeatState
 		}
 		return arr;
 	}*/
+	
+	function addToModsList(values:Array<Dynamic>)
+	{
+		for (i in 0...modsList.length)
+		{
+			if(modsList[i][0] == values[0])
+			{
+				//trace(modsList[i][0], values[0]);
+				return;
+			}
+		}
+		modsList.push(values);
+	}
 
 	function updateButtonToggle()
 	{
@@ -703,7 +765,7 @@ class ModMetadata
 					this.name = pack.folder;
 			}
 
-            if(pack.description != null && pack.description.length > 0)
+			if(pack.description != null && pack.description.length > 0)
 			{
 				if(pack.description != 'Description')
 					this.description = pack.description;
