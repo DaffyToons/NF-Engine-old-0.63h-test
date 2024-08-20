@@ -20,6 +20,9 @@ import sys.FileSystem;
 import flixel.graphics.FlxGraphic;
 import openfl.display.BitmapData;
 import haxe.Json;
+#if MODS_ALLOWED
+import Mods;
+#end
 
 import flash.media.Sound;
 
@@ -29,27 +32,6 @@ class Paths
 {
 	inline public static var SOUND_EXT = #if web "mp3" #else "ogg" #end;
 	inline public static var VIDEO_EXT = "mp4";
-
-	#if MODS_ALLOWED
-	public static var ignoreModFolders:Array<String> = [
-		'characters',
-		'custom_events',
-		'custom_notetypes',
-		'data',
-		'songs',
-		'music',
-		'menumusic',
-		'sounds',
-		'shaders',
-		'videos',
-		'images',
-		'stages',
-		'weeks',
-		'fonts',
-		'scripts',
-		'achievements'
-	];
-	#end
 
 	public static function excludeAsset(key:String) {
 		if (!dumpExclusions.contains(key))
@@ -113,7 +95,6 @@ class Paths
 		openfl.Assets.cache.clear("songs");
 	}
 
-	static public var currentModDirectory:String = '';
 	static public var currentLevel:String;
 	static public function setCurrentLevel(name:String)
 	{
@@ -286,7 +267,7 @@ class Paths
 	inline static public function fileExists(key:String, type:AssetType, ?ignoreMods:Bool = false, ?library:String)
 	{
 		#if MODS_ALLOWED
-		if(FileSystem.exists(mods(currentModDirectory + '/' + key)) || FileSystem.exists(mods(key))) {
+		if(FileSystem.exists(mods(Mods.currentModDirectory + '/' + key)) || FileSystem.exists(mods(key))) {
 			return true;
 		}
 		#end
@@ -428,29 +409,15 @@ class Paths
 		return modFolders('images/' + key + '.txt');
 	}
 
-	/* Goes unused for now
-
-	inline static public function modsShaderFragment(key:String, ?library:String)
-	{
-		return modFolders('shaders/'+key+'.frag');
-	}
-	inline static public function modsShaderVertex(key:String, ?library:String)
-	{
-		return modFolders('shaders/'+key+'.vert');
-	}
-	inline static public function modsAchievements(key:String) {
-		return modFolders('achievements/' + key + '.json');
-	}*/
-
 	static public function modFolders(key:String) {
-		if(currentModDirectory != null && currentModDirectory.length > 0) {
-			var fileToCheck:String = mods(currentModDirectory + '/' + key);
+		if(Mods.currentModDirectory != null && Mods.currentModDirectory.length > 0) {
+			var fileToCheck:String = mods(Mods.currentModDirectory + '/' + key);
 			if(FileSystem.exists(fileToCheck)) {
 				return fileToCheck;
 			}
 		}
 
-		for(mod in getGlobalMods()){
+		for(mod in Mods.getGlobalMods()){
 			var fileToCheck:String = mods(mod + '/' + key);
 			if(FileSystem.exists(fileToCheck))
 				return fileToCheck;
@@ -458,56 +425,5 @@ class Paths
 		}
 		return SUtil.getPath() + 'mods/' + key;
 	}
-
-	public static var globalMods:Array<String> = [];
-
-	static public function getGlobalMods()
-		return globalMods;
-
-	static public function pushGlobalMods() // prob a better way to do this but idc
-	{
-		globalMods = [];
-		var path:String = SUtil.getPath() + 'modsList.txt';
-		if(FileSystem.exists(path))
-		{
-			var list:Array<String> = CoolUtil.coolTextFile(path);
-			for (i in list)
-			{
-				var dat = i.split("|");
-				if (dat[1] == "1")
-				{
-					var folder = dat[0];
-					var path = Paths.mods(folder + '/pack.json');
-					if(FileSystem.exists(path)) {
-						try{
-							var rawJson:String = File.getContent(path);
-							if(rawJson != null && rawJson.length > 0) {
-								var stuff:Dynamic = Json.parse(rawJson);
-								var global:Bool = Reflect.getProperty(stuff, "runsGlobally");
-								if(global)globalMods.push(dat[0]);
-							}
-						} catch(e:Dynamic){
-							trace(e);
-						}
-					}
-				}
-			}
-		}
-		return globalMods;
-	}
-
-	static public function getModDirectories():Array<String> {
-		var list:Array<String> = [];
-		var modsFolder:String = mods();
-		if(FileSystem.exists(modsFolder)) {
-			for (folder in FileSystem.readDirectory(modsFolder)) {
-				var path = haxe.io.Path.join([modsFolder, folder]);
-				if (sys.FileSystem.isDirectory(path) && !ignoreModFolders.contains(folder) && !list.contains(folder)) {
-					list.push(folder);
-				}
-			}
-		}
-		return list;
-	}
-	#end
+    #end
 }

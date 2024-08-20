@@ -88,7 +88,7 @@ class MainMenuState extends MusicBeatState
         bpm = TitleState.bpm;
         
 		#if MODS_ALLOWED
-		Paths.pushGlobalMods();
+		Mods.pushGlobalMods();
 		#end
 
 		#if desktop
