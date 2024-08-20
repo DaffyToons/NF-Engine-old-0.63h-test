@@ -3,6 +3,8 @@ package;
 import WeekData;
 import Highscore;
 import Song;
+import DiffCalc;
+import Difficulty;
 
 import lime.utils.Assets;
 import openfl.utils.Assets as OpenFlAssets;
