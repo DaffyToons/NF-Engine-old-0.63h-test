@@ -84,7 +84,7 @@ class Mods
 		var list:ModsList = {enabled: [], disabled: [], all: []};
 
 		try {
-			for (mod in CoolUtil.coolTextFile(SUtil.getPath() + 'modsList.txt'))
+			for (mod in CoolUtil.coolTextFile('modsList.txt'))
 			{
 				//trace('Mod: $mod');
 				var dat = mod.split("|");
