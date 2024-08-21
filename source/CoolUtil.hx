@@ -1,5 +1,6 @@
 package;
 
+import flixel.text.FlxText;
 import flixel.util.FlxSave;
 import flixel.FlxG;
 import openfl.utils.Assets;
@@ -14,19 +15,8 @@ import sys.FileSystem;
 import openfl.utils.Assets;
 #end
 
-using StringTools;
-
 class CoolUtil
 {
-	public static var defaultDifficulties:Array<String> = [
-		'Easy',
-		'Normal',
-		'Hard'
-	];
-	public static var defaultDifficulty:String = 'Normal'; //The chart that has no suffix and starting difficulty on Freeplay/Story Mode
-
-	public static var difficulties:Array<String> = [];
-
 	inline public static function quantize(f:Float, snap:Float){
 		// changed so this actually works lol
 		var m:Float = Math.fround(f * snap);
@@ -34,27 +24,6 @@ class CoolUtil
 		return (m / snap);
 	}
 	
-	public static function getDifficultyFilePath(num:Null<Int> = null)
-	{
-		if(num == null) num = PlayState.storyDifficulty;
-
-		var fileSuffix:String = difficulties[num];
-		if(fileSuffix != defaultDifficulty)
-		{
-			fileSuffix = '-' + fileSuffix;
-		}
-		else
-		{
-			fileSuffix = '';
-		}
-		return Paths.formatToSongPath(fileSuffix);
-	}
-
-	public static function difficultyString():String
-	{
-		return difficulties[PlayState.storyDifficulty].toUpperCase();
-	}
-
 	inline public static function boundTo(value:Float, min:Float, max:Float):Float {
 		return Math.max(min, Math.min(max, value));
 	}
@@ -112,6 +81,20 @@ class CoolUtil
 		}
 		return maxKey;
 	}
+	
+	// 0.7x custom menus support
+	public static function floorDecimal(value:Float, decimals:Int):Float
+	{
+		if(decimals < 1)
+			return Math.floor(value);
+
+		var tempMult:Float = 1;
+		for (i in 0...decimals)
+			tempMult *= 10;
+
+		var newValue:Float = Math.floor(value * tempMult);
+		return newValue / tempMult;
+	}
 
 	public static function numberArray(max:Int, ?min = 0):Array<Int>
 	{
@@ -150,5 +133,20 @@ class CoolUtil
 		return #if (flixel < "5.0.0") folder #else FlxG.stage.application.meta.get('company')
 			+ '/'
 			+ FlxSave.validate(FlxG.stage.application.meta.get('file')) #end;
+	}
+	
+	public static function setTextBorderFromString(text:FlxText, border:String)
+	{
+		switch(border.toLowerCase().trim())
+		{
+			case 'shadow':
+				text.borderStyle = SHADOW;
+			case 'outline':
+				text.borderStyle = OUTLINE;
+			case 'outline_fast', 'outlinefast':
+				text.borderStyle = OUTLINE_FAST;
+			default:
+				text.borderStyle = NONE;
+		}
 	}
 }

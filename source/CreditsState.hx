@@ -3,7 +3,7 @@ package;
 #if desktop
 import Discord.DiscordClient;
 #end
-import flash.text.TextField;
+import openfl.text.TextField;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.addons.display.FlxGridOverlay;
@@ -13,7 +13,6 @@ import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import flixel.tweens.FlxTween;
 import flixel.tweens.FlxEase;
-import flixel.addons.display.FlxBackdrop;
 #if MODS_ALLOWED
 import sys.FileSystem;
 import sys.io.File;
@@ -35,18 +34,6 @@ class CreditsState extends MusicBeatState
 	var intendedColor:Int;
 	var colorTween:FlxTween;
 	var descBox:AttachedSprite;
-	
-	var bgMove:FlxBackdrop;
-	var ColorArray:Array<Int> = [
-		0xFF9400D3,
-		0xFF4B0082,
-		0xFF0000FF,
-		0xFF00FF00,
-		0xFFFFFF00,
-		0xFFFF7F00,
-		0xFFFF0000
-	                                
-	    ];
 
 	var offsetThing:Float = -75;
 
@@ -62,20 +49,11 @@ class CreditsState extends MusicBeatState
 		add(bg);
 		bg.screenCenter();
 		
-		bgMove = new FlxBackdrop(Paths.image('mainmenu_sprite/backdrop'), 1, 1, true, true, 0, 0);
-		//bgMove.scrollFactor.set();
-		bgMove.alpha = 0.1;
-		bgMove.color = ColorArray[MainMenuState.currentColor];
-		bgMove.screenCenter();
-		bgMove.velocity.set(FlxG.random.bool(50) ? 90 : -90, FlxG.random.bool(50) ? 90 : -90);
-		//bgMove.antialiasing = ClientPrefs.globalAntialiasing;
-		add(bgMove);
-		
 		grpOptions = new FlxTypedGroup<Alphabet>();
 		add(grpOptions);
 
 		#if MODS_ALLOWED
-		var path:String = SUtil.getPath() + 'modsList.txt';
+		var path:String = 'modsList.txt';
 		if(FileSystem.exists(path))
 		{
 			var leMods:Array<String> = CoolUtil.coolTextFile(path);
@@ -102,13 +80,9 @@ class CreditsState extends MusicBeatState
 		}
 		#end
 
-		var pisspoop:Array<Array<String>> = [ //Name - Icon name - Description - Link - BG Color
-		
-		    ['NF Engine Team'],
-			['beihu',		'beihu',		'Main Programmer',							'https://b23.tv/LVj0JVk',	'FFC0CB'],
-			['TieGuo',		'TieGuo',		'Programmer',							'https://b23.tv/OiK1Ssh',	'5DE7FF'],
-			//['Nuno Filipe Studios',	'nuno',				'Android Porter',							'https://www.youtube.com/channel/UCq7G3p4msVN5SX2CpJ86tTw',	'989c99'],
-			//['M.A. Jigsaw', 		'saw',				'AndroidTools Creator/Vpad Designer',		'https://www.youtube.com/channel/UC2Sk7vtPzOvbVzdVTWrribQ', '444444'],
+		var defaultList:Array<Array<String>> = [ //Name - Icon name - Description - Link - BG Color
+			['Psych Extended'],
+			['KralOyuncu',		    'KralOyuncuV2',		'Im Just Made This Build',					'https://youtube.com/@kraloyuncurbx',	'9E29CF'],
 			[''],
 			['Psych Engine Android Team'],
 			['MaysLastPlay',		'MaysLastPlay',		'Android Porter',							'https://www.youtube.com/channel/UCx0LxtFR8ROd9sFAq-UxDfw',	'5DE7FF'],
@@ -140,7 +114,7 @@ class CreditsState extends MusicBeatState
 			['kawaisprite',			'kawaisprite',		"Composer of Friday Night Funkin'",								'https://twitter.com/kawaisprite',		'378FC7']
 		];
 		
-		for(i in pisspoop){
+		for(i in defaultList){
 			creditsStuff.push(i);
 		}
 	
@@ -160,7 +134,9 @@ class CreditsState extends MusicBeatState
 					Paths.currentModDirectory = creditsStuff[i][5];
 				}
 
-				var icon:AttachedSprite = new AttachedSprite('credits/' + creditsStuff[i][1]);
+				var str:String = 'credits/missing_icon';
+				if (Paths.image('credits/' + creditsStuff[i][1]) != null) str = 'credits/' + creditsStuff[i][1];
+				var icon:AttachedSprite = new AttachedSprite(str);
 				icon.xAdd = optionText.width + 10;
 				icon.sprTracker = optionText;
 	
@@ -192,9 +168,19 @@ class CreditsState extends MusicBeatState
 		bg.color = getCurrentBGColor();
 		intendedColor = bg.color;
 		changeSelection();
-                #if android
-                addVirtualPad(UP_DOWN, A_B);
-                #end
+
+        #if mobile
+        #if ios
+        if (ClientPrefs.touchmenus)
+            addVirtualPad(NONE, A_B);
+        #end
+        #if android
+        if (ClientPrefs.touchmenus)
+            addVirtualPad(NONE, A);
+        #end
+        if (!ClientPrefs.touchmenus)
+            addVirtualPad(UP_DOWN, A_B);
+        #end
 		super.create();
 	}
 
@@ -217,18 +203,18 @@ class CreditsState extends MusicBeatState
 				var upP = controls.UI_UP_P;
 				var downP = controls.UI_DOWN_P;
 
-				if (upP)
+				if (upP || ClientPrefs.touchmenus && SwipeUtil.swipeUp)
 				{
 					changeSelection(-shiftMult);
 					holdTime = 0;
 				}
-				if (downP)
+				if (downP || ClientPrefs.touchmenus && SwipeUtil.swipeDown)
 				{
 					changeSelection(shiftMult);
 					holdTime = 0;
 				}
 
-				if(controls.UI_DOWN || controls.UI_UP)
+				if(controls.UI_DOWN || controls.UI_UP || ClientPrefs.touchmenus && SwipeUtil.swipeDown || ClientPrefs.touchmenus && SwipeUtil.swipeUp)
 				{
 					var checkLastHold:Int = Math.floor((holdTime - 0.5) * 10);
 					holdTime += elapsed;
@@ -236,15 +222,18 @@ class CreditsState extends MusicBeatState
 
 					if(holdTime > 0.5 && checkNewHold - checkLastHold > 0)
 					{
-						changeSelection((checkNewHold - checkLastHold) * (controls.UI_UP ? -shiftMult : shiftMult));
+						if (ClientPrefs.touchmenus)
+						    changeSelection((checkNewHold - checkLastHold) * (SwipeUtil.swipeUp ? -shiftMult : shiftMult));
+						else
+						    changeSelection((checkNewHold - checkLastHold) * (controls.UI_UP ? -shiftMult : shiftMult));
 					}
 				}
 			}
-
-			if(controls.ACCEPT && (creditsStuff[curSelected][3] == null || creditsStuff[curSelected][3].length > 4)) {
-				CoolUtil.browserLoad(creditsStuff[curSelected][3]);
-			}
-			if (controls.BACK)
+            
+    		if(controls.ACCEPT && (creditsStuff[curSelected][3] == null || creditsStuff[curSelected][3].length > 4)) {
+    			CoolUtil.browserLoad(creditsStuff[curSelected][3]);
+    		}
+			if (controls.BACK #if android || ClientPrefs.touchmenus && FlxG.android.justReleased.BACK #end #if mobile || ClientPrefs.touchmenus && SwipeUtil.swipeRight #end)
 			{
 				if(colorTween != null) {
 					colorTween.cancel();
