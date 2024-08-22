@@ -39,6 +39,9 @@ import MainMenuState;
 import options.OptionsState;
 
 /*
+    Note: This back port supports Psych Extended only
+    Backported by KralOyuncu 2010x
+    
 	create by TieGuo
 	artists, bug fix by Beihu & 487
 	
@@ -1253,10 +1256,7 @@ class FreeplayState extends MusicBeatState {
 					//FlxG.sound.music.volume = 0.1;
 				}
 				FlxG.sound.play(Paths.sound('cancelMenu'));
-				if (ClientPrefs.MainMenuStyle == '0.6.3')
-    				MusicBeatState.switchState(new MainMenuStateOld());
-    			else
-    				MusicBeatState.switchState(new MainMenuState());
+    			MusicBeatState.switchState(new MainMenuState());
 				buttonControl = false;
 			}
 			selectedThing = 'Nothing';
