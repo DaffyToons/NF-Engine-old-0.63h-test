@@ -20,7 +20,6 @@ import sys.FileSystem;
 import flixel.graphics.FlxGraphic;
 import openfl.display.BitmapData;
 import haxe.Json;
-import flixel.graphics.FlxGraphic;
 
 import flash.media.Sound;
 
@@ -246,13 +245,6 @@ class Paths
 		var returnAsset:FlxGraphic = returnGraphic(key, library);
 		return returnAsset;
 	}
-	
-	inline static public function assetsimage(key:String, ?library:String):FlxGraphic
-	{
-		// streamlined the assets process more
-		var returnAsset:FlxGraphic = returnAssetsGraphic(key, library);
-		return returnAsset;
-	}
 
 	static public function getTextFromFile(key:String, ?ignoreMods:Bool = false):String
 	{
@@ -371,22 +363,6 @@ class Paths
 		trace('oh no its returning null NOOOO');
 		return null;
 	}
-	
-	public static function returnAssetsGraphic(key:String, ?library:String) {
-		#if MODS_ALLOWED
-		var modKey:String = assetsImages(key);
-		if(FileSystem.exists(modKey)) {
-			if(!currentTrackedAssets.exists(modKey)) {
-				var newBitmap:BitmapData = BitmapData.fromFile(modKey);
-				var newGraphic:FlxGraphic = FlxGraphic.fromBitmapData(newBitmap, false, modKey);
-				newGraphic.persist = true;
-				currentTrackedAssets.set(modKey, newGraphic);
-			}
-			localTrackedAssets.push(modKey);
-			return currentTrackedAssets.get(modKey);
-		}
-		#end
-	}
 
 	public static var currentTrackedSounds:Map<String, Sound> = [];
 	public static function returnSound(path:String, key:String, ?library:String) {
@@ -442,10 +418,6 @@ class Paths
 
 	inline static public function modsImages(key:String) {
 		return modFolders('images/' + key + '.png');
-	}
-	
-    inline static public function assetsImages(key:String) {
-		return 'assets/images/' + key + '.png';
 	}
 
 	inline static public function modsXml(key:String) {
