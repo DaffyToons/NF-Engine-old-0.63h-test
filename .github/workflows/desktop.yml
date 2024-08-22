@@ -35,6 +35,7 @@ jobs:
           haxelib install flixel-ui --quiet
           haxelib install hxjsonast --quiet
           haxelib install hxcpp-debug-server --quiet
+          haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc master --quiet
 
       - name: Compile (Windows)
         if: startsWith(matrix.os, 'windows')
