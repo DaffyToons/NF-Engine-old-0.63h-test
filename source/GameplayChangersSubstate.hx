@@ -166,6 +166,7 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		addVirtualPad(FULL, A_B_C);
 		addPadCamera();
 		#end
+		cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
 	}
 
 	var nextAccept:Int = 5;

@@ -131,6 +131,7 @@ class CustomFadeTransition extends MusicBeatSubstate {
 			EventText.cameras = [nextCamera];
 		}
 		nextCamera = null;
+		cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
 	}
 
 	override function destroy() {

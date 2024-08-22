@@ -71,11 +71,11 @@ class ResetScoreSubState extends MusicBeatSubstate
 		add(noText);
 		updateOptions();
 
-               #if android
-                addVirtualPad(LEFT_RIGHT, A_B);
-                addPadCamera();
-                #end
-
+        #if android
+        addVirtualPad(LEFT_RIGHT, A_B);
+        addPadCamera();
+        #end
+        cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
 	}
 
 	override function update(elapsed:Float)
