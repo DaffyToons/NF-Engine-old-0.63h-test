@@ -52,7 +52,9 @@ class OptionsState extends MusicBeatState
 
 	function openSelectedSubstate(label:String) {
 		if (label != "Adjust Delay and Combo"){
+			#if android
 			removeVirtualPad();
+			#end
 			persistentUpdate = false;
 		}
 		
@@ -174,8 +176,10 @@ class OptionsState extends MusicBeatState
 	override function closeSubState() {
 		super.closeSubState();
 		ClientPrefs.saveSettings();
+		#if android
 		removeVirtualPad();
 		addVirtualPad(UP_DOWN, A_B_X_Y);
+		#end
 		persistentUpdate = true;
 	}
 
