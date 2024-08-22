@@ -20,6 +20,7 @@ import sys.FileSystem;
 import flixel.graphics.FlxGraphic;
 import openfl.display.BitmapData;
 import haxe.Json;
+import flixel.graphics.FlxGraphic;
 
 import flash.media.Sound;
 
