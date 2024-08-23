@@ -62,6 +62,12 @@ class MusicBeatSubstate extends FlxSubState
 		_virtualpad.cameras = [camcontrol];
 	}
 	#end
+
+	#if desktop
+	override function create() {
+		FlxG.mouse.visible = true;
+	}
+	#end
 	
 	override function destroy() {
 		#if android
