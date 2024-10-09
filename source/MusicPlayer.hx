@@ -247,10 +247,11 @@ class MusicPlayer extends FlxGroup
 
 		if (playingMusic)
 		{
-			if (ClientPrefs.mobileC)
+			#if mobile
 			    instance.bottomText.text = "Press X to Pause / Press B to Exit / Press C to Reset the Song";
-			else
+			#else
 			    instance.bottomText.text = "Press SPACE to Pause / Press ESCAPE to Exit / Press R to Reset the Song";
+			#end
 			positionSong();
 			
 			progressBar.setRange(0, FlxG.sound.music.length);

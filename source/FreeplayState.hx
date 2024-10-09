@@ -164,10 +164,11 @@ class FreeplayState extends MusicBeatState
 		add(bottomBG);
 
         var leText:String;
-        if (ClientPrefs.mobileC)
+        #if mobile
 		    leText = "Press X to listen to the Song / Press C to open the Gameplay Changers Menu / Press Y to Reset your Score and Accuracy.";
-        else
+        #else
 		    leText = "Press SPACE to listen to the Song / Press CTRL to open the Gameplay Changers Menu / Press RESET to Reset your Score and Accuracy.";
+		#end
 		
 		bottomString = leText;
 		var size:Int = 16;
@@ -313,12 +314,7 @@ class FreeplayState extends MusicBeatState
 			{
 				persistentUpdate = false;
 				FlxG.sound.play(Paths.sound('cancelMenu'));
-				if (ClientPrefs.MainMenuStyle == '0.6.3' || ClientPrefs.MainMenuStyle == 'Extended')
-    				MusicBeatState.switchState(new MainMenuStateOld());
-    			else if (TitleState.IndieCrossEnabled)
-    				MusicBeatState.switchState(new MainMenuStateCROSS());
-    			else
-    				MusicBeatState.switchState(new MainMenuState());
+				MusicBeatState.switchState(new MainMenuState());
 			}
 		}
 
