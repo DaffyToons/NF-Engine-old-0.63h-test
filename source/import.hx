@@ -5,6 +5,8 @@ import FreeplayState;
 // 0.7x Support by KralOyuncu 2010x
 import Difficulty;
 import extras.states.*; //I forgot the import Extra States
+import extras.substates.*; //I forgot the import Extra Substates
+import objects.shapes.*; //Shapes
 
 #if sys
 import sys.*;

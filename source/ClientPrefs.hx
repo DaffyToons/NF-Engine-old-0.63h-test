@@ -43,6 +43,7 @@ class ClientPrefs {
     
 	public static var hitboxExtend = true;
 	public static var FreeplayStyle:String = 'NF';
+	public static var PauseMenuStyle:String = 'Psych';
 	public static var hitboxLocation:String = 'Bottom';
 	public static var hitboxalpha:Float = 0.2; //someone request this lol
 	public static var VirtualPadAlpha:Float = 0.75;
@@ -176,6 +177,7 @@ class ClientPrefs {
 		FlxG.save.data.VirtualPadSPACE = VirtualPadSPACE;
 	    FlxG.save.data.hitboxExtend = hitboxExtend;
 	    FlxG.save.data.FreeplayStyle = FreeplayStyle;
+	    FlxG.save.data.PauseMenuStyle = PauseMenuStyle;
 	    FlxG.save.data.hitboxLocation = hitboxLocation;
 	        // new extend
 	
@@ -321,6 +323,9 @@ class ClientPrefs {
 		}
 		if(FlxG.save.data.FreeplayStyle != null) {
 			FreeplayStyle = FlxG.save.data.FreeplayStyle;
+		}
+		if(FlxG.save.data.PauseMenuStyle != null) {
+			PauseMenuStyle = FlxG.save.data.PauseMenuStyle;
 		}
 		if(FlxG.save.data.hitboxalpha != null) {
 			hitboxalpha = FlxG.save.data.hitboxalpha;

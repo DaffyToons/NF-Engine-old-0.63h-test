@@ -34,6 +34,7 @@ class OptionsState extends MusicBeatState
 	var options:Array<String> = ['Note Colors', 'Controls', 'Adjust Delay and Combo', 'Graphics', 'Visuals and UI', 'Gameplay'];
 	private var grpOptions:FlxTypedGroup<Alphabet>;
 	private static var curSelected:Int = 0;
+	public static var stateType:Int = 0;
 	public static var isFreeplay:Bool = false;
 	public static var menuBG:FlxSprite;
 	var tipText:FlxText;
@@ -201,6 +202,9 @@ class OptionsState extends MusicBeatState
 			else if (OptionsState.isFreeplay == true) {
 			    MusicBeatState.switchState(new FreeplayStateNF());
 			    OptionsState.isFreeplay = false;
+			} else if (OptionsState.stateType == 1) {
+			    MusicBeatState.switchState(new FreeplayStateNOVA());
+			    OptionsState.stateType = 0;
 			} else {
 				FlxG.sound.play(Paths.sound('cancelMenu'));
 				MusicBeatState.switchState(new MainMenuState());

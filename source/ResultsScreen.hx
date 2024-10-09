@@ -219,6 +219,8 @@ class ResultsScreen extends FlxSubState
 			}
 			else if (ClientPrefs.FreeplayStyle == 'NF')
 				FlxG.switchState(new FreeplayStateNF());
+			else if (ClientPrefs.FreeplayStyle == 'NovaFlare')
+				FlxG.switchState(new FreeplayStateNOVA());
 			else
 				FlxG.switchState(new FreeplayState());
 			PlayState.instance.clear();

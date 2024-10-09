@@ -208,7 +208,8 @@ class TitleState extends MusicBeatState
 
 		FlxG.mouse.visible = false;
 		#if FREEPLAY
-		if (ClientPrefs.FreeplayStyle == 'NF') MusicBeatState.switchState(new FreeplayState());
+		if (ClientPrefs.FreeplayStyle == 'NF') MusicBeatState.switchState(new FreeplayStateNF());
+		else if (ClientPrefs.FreeplayStyle == 'NovaFlare') MusicBeatState.switchState(new FreeplayStateNOVA());
 		else MusicBeatState.switchState(new FreeplayState());
 		#elseif CHARTING
 		MusicBeatState.switchState(new ChartingState());
@@ -552,8 +553,9 @@ class TitleState extends MusicBeatState
 								}
 							});
 							FlxG.sound.music.fadeOut();
-							if(FreeplayState.vocals != null && ClientPrefs.FreeplayStyle == 'NF') FreeplayStateNF.vocals.fadeOut();
-							else if(FreeplayState.vocals != null && !ClientPrefs.FreeplayStyle == 'NF') FreeplayState.vocals.fadeOut();
+							if(FreeplayStateNF.vocals != null) FreeplayStateNF.vocals.fadeOut();
+							else if(FreeplayStateNOVA.vocals != null) FreeplayStateNOVA.vocals.fadeOut();
+							else if(FreeplayState.vocals != null) FreeplayState.vocals.fadeOut();
 							closedState = true;
 							transitioning = true;
 							playJingle = true;
@@ -777,7 +779,8 @@ class TitleState extends MusicBeatState
 				if(easteregg == 'SHADOW')
 				{
 					FlxG.sound.music.fadeOut();
-					if(FreeplayState.vocals != null && ClientPrefs.FreeplayStyle == 'NF') FreeplayState.vocals.fadeOut();
+					if(FreeplayStateNF.vocals != null) FreeplayStateNF.vocals.fadeOut();
+					else if(FreeplayStateNOVA.vocals != null) FreeplayStateNOVA.vocals.fadeOut();
 					else if(FreeplayState.vocals != null) FreeplayState.vocals.fadeOut();
 				}
 				#end

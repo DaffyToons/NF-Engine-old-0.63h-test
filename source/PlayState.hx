@@ -347,7 +347,10 @@ class PlayState extends MusicBeatState
 
 		debugKeysChart = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('debug_1'));
 		debugKeysCharacter = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('debug_2'));
-		PauseSubState.songName = null; //Reset to default
+		if (ClientPrefs.PauseMenuStyle == 'NovaFlare')
+		    PauseSubStateNOVA.songName = null; //Reset to default
+		else
+		    PauseSubState.songName = null; //Reset to default
 		playbackRate = ClientPrefs.getGameplaySetting('songspeed', 1);
 
 		keysArray = [
@@ -1369,11 +1372,20 @@ class PlayState extends MusicBeatState
 		precacheList.set('missnote2', 'sound');
 		precacheList.set('missnote3', 'sound');
 
-		if (PauseSubState.songName != null) {
-			precacheList.set(PauseSubState.songName, 'music');
-		} else if(ClientPrefs.pauseMusic != 'None') {
-			precacheList.set(Paths.formatToSongPath(ClientPrefs.pauseMusic), 'music');
-		}
+		if (ClientPrefs.PauseMenuStyle == 'NovaFlare')
+        {
+    		if (PauseSubStateNOVA.songName != null)
+    			precacheList.set(PauseSubStateNOVA.songName, 'music');
+    		else if(ClientPrefs.pauseMusic != 'None')
+    			precacheList.set(Paths.formatToSongPath(ClientPrefs.pauseMusic), 'music');
+    	}
+    	else
+    	{
+    		if (PauseSubState.songName != null)
+    			precacheList.set(PauseSubState.songName, 'music');
+    		else if(ClientPrefs.pauseMusic != 'None')
+    			precacheList.set(Paths.formatToSongPath(ClientPrefs.pauseMusic), 'music');
+    	}
 
 		precacheList.set('alphabet', 'image');
 	
@@ -2844,6 +2856,21 @@ class PlayState extends MusicBeatState
 			{
 				resyncVocals();
 			}
+			
+			if (ClientPrefs.PauseMenuStyle == 'NovaFlare')
+		    {
+    		    if (PauseSubStateNOVA.moveType == 1){
+    		        PauseSubStateNOVA.moveType = 2; //really back to pause
+    		        super.closeSubState();
+    		        //openSubState(new OptionsSubstate());
+    		        return;
+    		    }
+    		    else if (PauseSubStateNOVA.moveType == 2){		
+    		        super.closeSubState();        
+    		        openSubState(new PauseSubStateNOVA());		        
+    		        return;
+    		    }
+		    }
 
 			if (startTimer != null && !startTimer.finished)
 				startTimer.active = true;
@@ -3472,7 +3499,10 @@ class PlayState extends MusicBeatState
 			androidc.y = 720;
 			//androidc.visible = true;
 			#end
-		openSubState(new PauseSubState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
+		if (ClientPrefs.PauseMenuStyle == 'NovaFlare')
+		    openSubState(new PauseSubStateNOVA());
+		else
+		    openSubState(new PauseSubState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
 		//}
 
 		#if desktop
@@ -4178,6 +4208,7 @@ class PlayState extends MusicBeatState
 					CustomFadeTransition.nextCamera = null;
 				}
 				if (ClientPrefs.FreeplayStyle == 'NF') MusicBeatState.switchState(new FreeplayStateNF());
+				else if (ClientPrefs.FreeplayStyle == 'NovaFlare') MusicBeatState.switchState(new FreeplayStateNOVA());
 				else MusicBeatState.switchState(new FreeplayState());
 				FlxG.sound.playMusic(Paths.music('freakyMenu'));
 				changedDifficulty = false;
