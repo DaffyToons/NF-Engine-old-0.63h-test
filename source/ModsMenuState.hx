@@ -36,6 +36,8 @@ using StringTools;
 
 class ModsMenuState extends MusicBeatState
 {
+    public static var isFreePlay:Bool = false;
+    
 	var mods:Array<ModMetadata> = [];
 	static var changedAThing = false;
 	var bg:FlxSprite;
@@ -528,10 +530,15 @@ class ModsMenuState extends MusicBeatState
 					FreeplayState.vocals = null;
 				}
 				FlxG.camera.fade(FlxColor.BLACK, 0.5, false, FlxG.resetGame, false);
+				isFreePlay = false;
 			}
 			else
 			{
-				MusicBeatState.switchState(new MainMenuState());
+			    else if (ClientPrefs.FreeplayStyle == 'NovaFlare' && isFreePlay)
+                    MusicBeatState.switchState(new FreeplayStateNOVA());
+                else
+				    MusicBeatState.switchState(new MainMenuState());
+				isFreePlay = false;
 			}
 		}
 

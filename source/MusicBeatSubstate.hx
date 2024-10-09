@@ -46,6 +46,15 @@ class MusicBeatSubstate extends FlxSubState
 		controls.trackedinputsUI = [];
 	}
 	#end
+	
+	#if android
+	public function addVirtualPadCamera() {
+		var camcontrol = new flixel.FlxCamera();
+		camcontrol.bgColor.alpha = 0;
+		FlxG.cameras.add(camcontrol, false);
+		_virtualpad.cameras = [camcontrol];
+	}
+	#end
 
 	#if android
 	public function removeVirtualPad() {

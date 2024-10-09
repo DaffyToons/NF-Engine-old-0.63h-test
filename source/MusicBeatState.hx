@@ -14,7 +14,6 @@ import flixel.util.FlxGradient;
 import flixel.FlxState;
 import flixel.FlxCamera;
 import flixel.FlxBasic;
-import backend.PsychCamera;
 
 #if android
 import flixel.input.actions.FlxActionInput;
@@ -140,16 +139,6 @@ class MusicBeatState extends FlxUIState
 		#if desktop
 		FlxG.mouse.visible = true;
 		#end
-	}
-	
-	public function initPsychCamera():PsychCamera
-	{
-		var camera = new PsychCamera();
-		FlxG.cameras.reset(camera);
-		FlxG.cameras.setDefaultDrawTarget(camera, true);
-		// _psychCameraInitialized = true;
-		//trace('initialized psych camera ' + Sys.cpuTime());
-		return camera;
 	}
 
 	override function update(elapsed:Float)

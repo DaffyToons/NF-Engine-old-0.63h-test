@@ -102,7 +102,7 @@ class ChartingState extends MusicBeatState
     var postfix:String = '';
     
 	var UI_box:FlxUITabMenu;
-
+    public static var isFreePlay:Bool = false;
 	public static var goToPlayState:Bool = false;
 	/**
 	 * Array of notes showing when each section STARTS in STEPS
@@ -1936,7 +1936,11 @@ class ChartingState extends MusicBeatState
 		        vocals = null;
 			    
 				PlayState.chartingMode = false;
-				MusicBeatState.switchState(new editors.MasterEditorMenu());
+				if (ClientPrefs.FreeplayStyle == 'NovaFlare' && isFreePlay)
+                    MusicBeatState.switchState(new FreeplayStateNOVA());
+        		else
+        			MusicBeatState.switchState(new editors.MasterEditorMenu());
+        		isFreePlay = false;
 				FlxG.sound.playMusic(Paths.music('freakyMenu'));
 				FlxG.mouse.visible = false;
 				return;

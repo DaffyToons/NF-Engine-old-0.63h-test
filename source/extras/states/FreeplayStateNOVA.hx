@@ -109,7 +109,7 @@ class FreeplayStateNOVA extends MusicBeatState
 		DiscordClient.changePresence("In the Menus", null);
 		#end
 
-		camGame = initPsychCamera();
+		camGame = FlxCamera();
 
 		for (i in 0...WeekData.weeksList.length)
 		{
