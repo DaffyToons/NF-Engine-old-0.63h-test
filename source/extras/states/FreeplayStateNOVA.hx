@@ -53,7 +53,6 @@ class FreeplayStateNOVA extends MusicBeatState
 	var camAudio:FlxCamera;
 	var camUI:FlxCamera;
 	var camHS:FlxCamera;
-	var camGame:FlxCamera;
 
 	var magenta:FlxSprite;
 	var intendedColor:Int;
