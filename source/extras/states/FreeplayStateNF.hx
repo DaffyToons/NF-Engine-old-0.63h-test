@@ -608,7 +608,7 @@ class FreeplayStateNF extends MusicBeatState {
 					if (waitTimer != null) waitTimer.cancel();
 					//FlxG.sound.music.volume = 0.1;
 				}	
-				OptionsState.stateType = 2;
+				OptionsState.isFreeplay = true;
 				LoadingState.loadAndSwitchState(new OptionsState());
 			}
 			
@@ -1262,10 +1262,7 @@ class FreeplayStateNF extends MusicBeatState {
 					//FlxG.sound.music.volume = 0.1;
 				}
 				FlxG.sound.play(Paths.sound('cancelMenu'));
-				if (ClientPrefs.MainMenuStyle == '0.6.3' || ClientPrefs.MainMenuStyle == 'Extended')
-    				MusicBeatState.switchState(new MainMenuStateOld());
-    			else
-    				MusicBeatState.switchState(new MainMenuState());
+				MusicBeatState.switchState(new MainMenuState());
 				buttonControl = false;
 			}
 			selectedThing = 'Nothing';
@@ -1374,7 +1371,7 @@ class FreeplayStateNF extends MusicBeatState {
     					if (waitTimer != null) waitTimer.cancel();
     					//FlxG.sound.music.volume = 0.1;
     				}  
-    				OptionsState.stateType = 2;		
+    				OptionsState.isFreeplay = true;
 					LoadingState.loadAndSwitchState(new OptionsState());
 				case 1: // Gameplay Changer					
 					openSubState(new GameplayChangersSubstate());

@@ -517,7 +517,7 @@ class ModsMenuState extends MusicBeatState
 					FreeplayStateNF.vocals.fadeOut(0.3);
 					FreeplayStateNF.vocals = null;
 				}
-				else if(FreeplayState.vocals != null !ClientPrefs.FreeplayStyle == 'NF')
+				else if(FreeplayState.vocals != null && !ClientPrefs.FreeplayStyle == 'NF')
 				{
 					FreeplayState.vocals.fadeOut(0.3);
 					FreeplayState.vocals = null;
