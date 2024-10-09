@@ -8,7 +8,7 @@ import openfl.geom.ColorTransform;
 import openfl.geom.Rectangle;
 import openfl.display.Shape;
 import objects.shape.ShapeEX;
-import flixel.addons.ui.FlxUIInputText
+import flixel.addons.ui.FlxUIInputText;
 
 import flixel.util.FlxSpriteUtil;
 import flixel.util.FlxStringUtil; 
