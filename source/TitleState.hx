@@ -553,7 +553,7 @@ class TitleState extends MusicBeatState
 							});
 							FlxG.sound.music.fadeOut();
 							if(FreeplayState.vocals != null && ClientPrefs.FreeplayStyle == 'NF') FreeplayStateNF.vocals.fadeOut();
-							elseif(FreeplayState.vocals != null && !ClientPrefs.FreeplayStyle == 'NF') FreeplayState.vocals.fadeOut();
+							else if(FreeplayState.vocals != null && !ClientPrefs.FreeplayStyle == 'NF') FreeplayState.vocals.fadeOut();
 							closedState = true;
 							transitioning = true;
 							playJingle = true;
@@ -778,7 +778,7 @@ class TitleState extends MusicBeatState
 				{
 					FlxG.sound.music.fadeOut();
 					if(FreeplayState.vocals != null && ClientPrefs.FreeplayStyle == 'NF') FreeplayState.vocals.fadeOut();
-					elseif(FreeplayState.vocals != null) FreeplayState.vocals.fadeOut();
+					else if(FreeplayState.vocals != null) FreeplayState.vocals.fadeOut();
 				}
 				#end
 			}

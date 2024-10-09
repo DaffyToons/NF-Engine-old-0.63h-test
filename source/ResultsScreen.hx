@@ -217,7 +217,7 @@ class ResultsScreen extends FlxSubState
 				Conductor.changeBPM(102);
 				FlxG.switchState(new MainMenuState());
 			}
-			elseif (ClientPrefs.FreeplayStyle == 'NF')
+			else if (ClientPrefs.FreeplayStyle == 'NF')
 				FlxG.switchState(new FreeplayStateNF());
 			else
 				FlxG.switchState(new FreeplayState());
