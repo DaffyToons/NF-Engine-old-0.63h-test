@@ -199,7 +199,7 @@ class OptionsState extends MusicBeatState
 				PauseSubState.MoveOption = false;
 			}
 			else if (OptionsState.isFreeplay == true) {
-			    MusicBeatState.switchState(new FreeplayState());
+			    MusicBeatState.switchState(new FreeplayStateNF());
 			    OptionsState.isFreeplay = false;
 			} else {
 				FlxG.sound.play(Paths.sound('cancelMenu'));

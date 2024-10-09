@@ -68,6 +68,14 @@ class VisualsUISubState extends BaseOptionsMenu
 		rpcTitle = 'Visuals & UI Settings Menu'; //for Discord Rich Presence
         noteSkinList.unshift('original');
         
+        var option:Option = new Option('Freeplay Menu Style:',
+			"Choose your Freeplay Menu Style",
+			'FreeplayStyle',
+			'string',
+			'NF',
+			['Psych', 'NF']);
+		addOption(option);
+        
 		var option:Option = new Option('Note Splashes',
 			"If unchecked, hitting \"Sick!\" notes won't show particles.",
 			'noteSplashes',

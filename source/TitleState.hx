@@ -208,7 +208,8 @@ class TitleState extends MusicBeatState
 
 		FlxG.mouse.visible = false;
 		#if FREEPLAY
-		MusicBeatState.switchState(new FreeplayState());
+		if (ClientPrefs.FreeplayStyle == 'NF') MusicBeatState.switchState(new FreeplayState());
+		else MusicBeatState.switchState(new FreeplayState());
 		#elseif CHARTING
 		MusicBeatState.switchState(new ChartingState());
 		#else
@@ -551,10 +552,8 @@ class TitleState extends MusicBeatState
 								}
 							});
 							FlxG.sound.music.fadeOut();
-							if(FreeplayState.vocals != null)
-							{
-								FreeplayState.vocals.fadeOut();
-							}
+							if(FreeplayState.vocals != null && ClientPrefs.FreeplayStyle == 'NF') FreeplayStateNF.vocals.fadeOut();
+							elseif(FreeplayState.vocals != null && !ClientPrefs.FreeplayStyle == 'NF') FreeplayState.vocals.fadeOut();
 							closedState = true;
 							transitioning = true;
 							playJingle = true;
@@ -778,10 +777,8 @@ class TitleState extends MusicBeatState
 				if(easteregg == 'SHADOW')
 				{
 					FlxG.sound.music.fadeOut();
-					if(FreeplayState.vocals != null)
-					{
-						FreeplayState.vocals.fadeOut();
-					}
+					if(FreeplayState.vocals != null && ClientPrefs.FreeplayStyle == 'NF') FreeplayState.vocals.fadeOut();
+					elseif(FreeplayState.vocals != null) FreeplayState.vocals.fadeOut();
 				}
 				#end
 			}

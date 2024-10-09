@@ -113,6 +113,8 @@ class GameOverSubstate extends MusicBeatSubstate
 
 			if (PlayState.isStoryMode)
 				MusicBeatState.switchState(new StoryMenuState());
+			elseif (ClientPrefs.FreeplayStyle == 'NF')
+				MusicBeatState.switchState(new FreeplayStateNF());
 			else
 				MusicBeatState.switchState(new FreeplayState());
 

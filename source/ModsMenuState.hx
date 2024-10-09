@@ -512,7 +512,12 @@ class ModsMenuState extends MusicBeatState
 				TitleState.initialized = false;
 				TitleState.closedState = false;
 				FlxG.sound.music.fadeOut(0.3);
-				if(FreeplayState.vocals != null)
+				if(FreeplayState.vocals != null && ClientPrefs.FreeplayStyle == 'NF')
+				{
+					FreeplayStateNF.vocals.fadeOut(0.3);
+					FreeplayStateNF.vocals = null;
+				}
+				elseif(FreeplayState.vocals != null !ClientPrefs.FreeplayStyle == 'NF')
 				{
 					FreeplayState.vocals.fadeOut(0.3);
 					FreeplayState.vocals = null;
