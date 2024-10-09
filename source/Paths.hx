@@ -239,7 +239,7 @@ class Paths
 		return inst;
 	}
 
-	inline static public function image(key:String, ?library:String):FlxGraphic
+	inline static public function image(key:String, ?library:String, ?extraLoad:Bool = false):FlxGraphic
 	{
 		// streamlined the assets process more
 		var returnAsset:FlxGraphic = returnGraphic(key, library);
@@ -334,9 +334,11 @@ class Paths
 
 	// completely rewritten asset loading? fuck!
 	public static var currentTrackedAssets:Map<String, FlxGraphic> = [];
-	public static function returnGraphic(key:String, ?library:String) {
+	public static function returnGraphic(key:String, ?library:String, ?extraLoad:Bool = false) {
 		#if MODS_ALLOWED
 		var modKey:String = modsImages(key);
+		if (extraLoad)
+		    modKey = modFolders(key + '.png');
 		if(FileSystem.exists(modKey)) {
 			if(!currentTrackedAssets.exists(modKey)) {
 				var newBitmap:BitmapData = BitmapData.fromFile(modKey);

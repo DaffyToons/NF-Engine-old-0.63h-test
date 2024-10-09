@@ -1201,7 +1201,7 @@ class PlayRect extends FlxSpriteGroup //back button
 class SearchButton extends FlxSpriteGroup
 {
     var bg:Rect;
-    var search:PsychUIInputText;
+    var search:FlxUIInputText;
     var tapText:FlxText;
     var itemDis:FlxText;
 
@@ -1212,7 +1212,7 @@ class SearchButton extends FlxSpriteGroup
         bg = new Rect(0, 0, width, height, 25, 25, 0x000000);
         add(bg);
 
-        search = new PsychUIInputText(5, 5, Std.int(width - 10), '', 30);
+        search = new FlxUIInputText(5, 5, Std.int(width - 10), '', 30);
         search.bg.visible = false;
         search.behindText.alpha = 0;
         search.textObj.font =  Paths.font('montserrat.ttf');

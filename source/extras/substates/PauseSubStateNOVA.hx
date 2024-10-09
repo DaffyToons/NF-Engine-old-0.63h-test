@@ -410,7 +410,7 @@ class PauseSubStateNOVA extends MusicBeatSubstate
 			addVirtualPad(UP_DOWN, A);
 		}
 		*/
-		addVirtualPad(PAUSE, A);
+		addVirtualPad(FULL, A);
 		addVirtualPadCamera();
 		
 		cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
@@ -634,7 +634,7 @@ class PauseSubStateNOVA extends MusicBeatSubstate
 				case 'Options':
 				    PlayState.instance.paused = true; // For lua
 					PlayState.instance.vocals.volume = 0;
-					OptionsState.onPlayState = true;
+					PauseSubState.MoveOption = true;
 					MusicBeatState.switchState(new OptionsState());
 					if(ClientPrefs.pauseMusic != 'None'){
 						FlxG.sound.playMusic(Paths.music(Paths.formatToSongPath(ClientPrefs.pauseMusic)), pauseMusic.volume);

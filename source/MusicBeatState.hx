@@ -14,6 +14,7 @@ import flixel.util.FlxGradient;
 import flixel.FlxState;
 import flixel.FlxCamera;
 import flixel.FlxBasic;
+import backend.PsychCamera;
 
 #if android
 import flixel.input.actions.FlxActionInput;
@@ -54,6 +55,15 @@ class MusicBeatState extends FlxUIState
 		controls.setVirtualPadUI(_virtualpad, DPad, Action);
 		trackedinputsUI = controls.trackedinputsUI;
 		controls.trackedinputsUI = [];
+	}
+	#end
+	
+	#if android
+	public function addVirtualPadCamera() {
+		var camcontrol = new flixel.FlxCamera();
+		camcontrol.bgColor.alpha = 0;
+		FlxG.cameras.add(camcontrol, false);
+		_virtualpad.cameras = [camcontrol];
 	}
 	#end
 
@@ -130,6 +140,16 @@ class MusicBeatState extends FlxUIState
 		#if desktop
 		FlxG.mouse.visible = true;
 		#end
+	}
+	
+	public function initPsychCamera():PsychCamera
+	{
+		var camera = new PsychCamera();
+		FlxG.cameras.reset(camera);
+		FlxG.cameras.setDefaultDrawTarget(camera, true);
+		// _psychCameraInitialized = true;
+		//trace('initialized psych camera ' + Sys.cpuTime());
+		return camera;
 	}
 
 	override function update(elapsed:Float)

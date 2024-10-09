@@ -8,6 +8,9 @@ import Controls;
 
 class ClientPrefs {
 	public static var downScroll:Bool = true;
+	public static var marvelousRating:Bool = true;	
+	public static var marvelousSprite:Bool = true;	
+    public static var marvelousWindow:Int = 15;
 	public static var middleScroll:Bool = false;
 	public static var opponentStrums:Bool = true;
 	public static var showFPS:Bool = true;
@@ -128,6 +131,9 @@ class ClientPrefs {
 
 	public static function saveSettings() {
 		FlxG.save.data.downScroll = downScroll;
+		FlxG.save.data.marvelousRating = marvelousRating;
+		FlxG.save.data.marvelousSprite = marvelousSprite;
+		FlxG.save.data.marvelousWindow = marvelousWindow;
 		FlxG.save.data.middleScroll = middleScroll;
 		FlxG.save.data.opponentStrums = opponentStrums;
 		FlxG.save.data.showFPS = showFPS;
@@ -201,6 +207,15 @@ class ClientPrefs {
 	public static function loadPrefs() {
 		if(FlxG.save.data.downScroll != null) {
 			downScroll = FlxG.save.data.downScroll;
+		}
+		if(FlxG.save.data.marvelousRating != null) {
+			marvelousRating = FlxG.save.data.marvelousRating;
+		}
+		if(FlxG.save.data.marvelousSprite != null) {
+			marvelousSprite = FlxG.save.data.marvelousSprite;
+		}
+		if(FlxG.save.data.marvelousWindow != null) {
+			marvelousWindow = FlxG.save.data.marvelousWindow;
 		}
 		if(FlxG.save.data.middleScroll != null) {
 			middleScroll = FlxG.save.data.middleScroll;
