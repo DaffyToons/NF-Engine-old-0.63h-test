@@ -53,6 +53,7 @@ class FreeplayStateNOVA extends MusicBeatState
 	var camAudio:FlxCamera;
 	var camUI:FlxCamera;
 	var camHS:FlxCamera;
+	var camGame:FlxCamera;
 
 	var magenta:FlxSprite;
 	var intendedColor:Int;
@@ -108,8 +109,6 @@ class FreeplayStateNOVA extends MusicBeatState
 		// Updating Discord Rich Presence
 		DiscordClient.changePresence("In the Menus", null);
 		#end
-
-		camGame = FlxCamera();
 
 		for (i in 0...WeekData.weeksList.length)
 		{
