@@ -82,7 +82,7 @@ class PsychUIInputText extends FlxSpriteGroup
 		this.selection.color = FlxColor.BLUE;
 
 		@:bypassAccessor fieldWidth = wid;
-		setGraphicSize(wid + 2, 8 + 2);
+		setGraphicSize(wid + 2, 30 + 2);
 		updateHitbox();
 		this.text = text;
 
@@ -562,7 +562,7 @@ class PsychUIInputText extends FlxSpriteGroup
 		{
 			textObj.scale.x = 1;
 			textObj.scale.y = 1;
-			if(caret != null && caret.exists) caret.setGraphicSize(1, 8 - 4);
+			if(caret != null && caret.exists) caret.setGraphicSize(1, 30 - 4);
 		}
 	}
 	
