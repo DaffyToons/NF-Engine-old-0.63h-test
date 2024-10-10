@@ -183,7 +183,7 @@ class FreeplayState extends MusicBeatState
 		changeSelection();
 		updateTexts();
 
-		addVirtualPad(FULL, A_B_C_X_Y_Z);
+		#if android addVirtualPad(FULL, A_B_C_X_Y_Z); #end
 		super.create();
 	}
 
@@ -192,8 +192,10 @@ class FreeplayState extends MusicBeatState
 		changeSelection(0, false);
 		persistentUpdate = true;
 		super.closeSubState();
+		#if android
 		removeVirtualPad();
 		addVirtualPad(FULL, A_B_C_X_Y_Z);
+		#end
 	}
 
 	public function addSong(songName:String, weekNum:Int, songCharacter:String, color:Int)
@@ -234,7 +236,7 @@ class FreeplayState extends MusicBeatState
 			ratingSplit[1] += '0';
 
 		var shiftMult:Int = 1;
-        if((FlxG.keys.pressed.SHIFT || _virtualpad.buttonZ.pressed) && !player.playingMusic) shiftMult = 3;
+        if((FlxG.keys.pressed.SHIFT #if android || _virtualpad.buttonZ.pressed #end) && !player.playingMusic) shiftMult = 3;
 
 		if (!player.playingMusic)
 		{
@@ -318,13 +320,13 @@ class FreeplayState extends MusicBeatState
 			}
 		}
 
-        if((FlxG.keys.justPressed.CONTROL || _virtualpad.buttonC.justPressed) && !player.playingMusic)
+        if((FlxG.keys.justPressed.CONTROL #if android || _virtualpad.buttonC.justPressed #end) && !player.playingMusic)
 		{
 			persistentUpdate = false;
 			openSubState(new GameplayChangersSubstate());
-			removeVirtualPad();
+			#if android removeVirtualPad(); #end
 		}
-        else if(FlxG.keys.justPressed.SPACE || _virtualpad.buttonX.justPressed)
+        else if(FlxG.keys.justPressed.SPACE #if android || _virtualpad.buttonX.justPressed #end)
 		{
 			if(instPlaying != curSelected && !player.playingMusic)
 			{
@@ -411,11 +413,11 @@ class FreeplayState extends MusicBeatState
 			DiscordClient.loadModRPC();
 			#end
 		}
-        else if((controls.RESET || _virtualpad.buttonY.justPressed) && !player.playingMusic)
+        else if((controls.RESET #if android || _virtualpad.buttonY.justPressed #end) && !player.playingMusic)
 		{
 			persistentUpdate = false;
 			openSubState(new ResetScoreSubState(songs[curSelected].songName, curDifficulty, songs[curSelected].songCharacter));
-			removeVirtualPad();
+			#if android removeVirtualPad(); #end
 			FlxG.sound.play(Paths.sound('scrollMenu'));
 		}
 

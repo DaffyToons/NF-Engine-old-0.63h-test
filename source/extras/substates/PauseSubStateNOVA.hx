@@ -400,18 +400,10 @@ class PauseSubStateNOVA extends MusicBeatSubstate
 			changeMenuColor();
 		}, 0);
 		
-		/* nope
-		if (PlayState.chartingMode)
-		{
-			addVirtualPad(PAUSE, A);
-		}
-		else
-		{
-			addVirtualPad(UP_DOWN, A);
-		}
-		*/
+		#if android
 		addVirtualPad(FULL, A);
 		addVirtualPadCamera();
+		#end
 		
 		cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
 		
