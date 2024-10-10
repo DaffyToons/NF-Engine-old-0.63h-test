@@ -17,7 +17,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [windows-latest, ubuntu-latest, macos-12, macos-14]
+        os: [windows-latest, ubuntu-latest]
     steps:
       - name: Checkout
         uses: actions/checkout@main
@@ -58,10 +58,6 @@ jobs:
         if: startsWith(matrix.os, 'ubuntu')
         run: haxelib run lime build linux
 
-      - name: Compile (macOS)
-        if: startsWith(matrix.os, 'macos')
-        run: haxelib run lime build mac
-
       - name: Upload Artifact (Windows)
         if: startsWith(matrix.os, 'windows')
         uses: actions/upload-artifact@main
@@ -76,20 +72,4 @@ jobs:
         with:
           name: linuxBuild
           path: export/release/linux/bin/*
-          if-no-files-found: error
-
-      - name: Upload Artifact (macOS 12)
-        if: matrix.os == 'macos-12'
-        uses: actions/upload-artifact@main
-        with:
-          name: macOSBuild-x86_64
-          path: export/release/macos/bin/*
-          if-no-files-found: error
-
-      - name: Upload Artifact (macOS 14)
-        if: matrix.os == 'macos-14'
-        uses: actions/upload-artifact@main
-        with:
-          name: macOSBuild-arm64
-          path: export/release/macos/bin/*
           if-no-files-found: error
