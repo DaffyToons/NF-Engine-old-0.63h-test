@@ -62,8 +62,6 @@ class FreeplayStateNOVA extends MusicBeatState
 	var extraAudio:ExtraTopRect;
 	var extraHS:ExtraTopRect;
 
-	var instDis:ExtraAudio;
-	var voiceDis:ExtraAudio;
 	var voiceLine:MusicLine;
 
 	var infoRating:InfoText;
@@ -211,16 +209,6 @@ class FreeplayStateNOVA extends MusicBeatState
 		camHS.visible = false;
 		FlxG.cameras.add(camAudio, false);
 		FlxG.cameras.add(camHS, false);
-
-		voiceDis = new ExtraAudio(10, 10, Std.int(camAudio.width / 2 - 20), 90, FlxG.sound.music);
-		add(voiceDis);
-		voiceDis.camera = camAudio;
-		voiceDis.alpha = 0.7;
-
-		instDis = new ExtraAudio(Std.int(camAudio.width) - 10 - Std.int(camAudio.width / 2 - 20) + 1, 10, Std.int(camAudio.width / 2 - 20), 90, FlxG.sound.music);
-		add(instDis);
-		instDis.camera = camAudio;
-		instDis.alpha = 0.7;
 
 		voiceLine = new MusicLine(Std.int(extraAudio.x) + 10, Std.int(extraAudio.y + extraAudio.height) + 110, 545);
 		add(voiceLine);
