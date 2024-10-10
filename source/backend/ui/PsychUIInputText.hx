@@ -35,7 +35,6 @@ enum abstract CaseMode(Int) from Int from UInt to Int to UInt
 class PsychUIInputText extends FlxSpriteGroup
 {
 	public static final CHANGE_EVENT = "inputtext_change";
-	static final ignored:Array<FlxKey> = [SHIFT, CONTROL, ESCAPE];
 
 	static final KEY_TILDE = 126;
 	static final KEY_ACUTE = 180;
@@ -61,7 +60,7 @@ class PsychUIInputText extends FlxSpriteGroup
 
 	public var selectedFormat:FlxTextFormat = new FlxTextFormat(FlxColor.WHITE);
 
-	public function new(x:Int = 0, y:Int = 0, wid:Int = 100, ?text:String = '', size:Int = 8)
+	public function new(x:Float = 0, y:Float = 0, wid:Int = 100, ?text:String = '', size:Int = 8)
 	{
 		super(x, y);
 		this.bg = new FlxSprite().makeGraphic(1, 1, FlxColor.BLACK);
@@ -82,7 +81,7 @@ class PsychUIInputText extends FlxSpriteGroup
 		this.selection.color = FlxColor.BLUE;
 
 		@:bypassAccessor fieldWidth = wid;
-		//setGraphicSize(wid + 2, this.textObj.height + 2);
+		setGraphicSize(wid + 2, this.textObj.height + 2);
 		updateHitbox();
 		this.text = text;
 
@@ -222,6 +221,7 @@ class PsychUIInputText extends FlxSpriteGroup
 			return;
 		}
 
+		static final ignored:Array<FlxKey> = [SHIFT, CONTROL, ESCAPE];
 		if(ignored.contains(flxKey)) return;
 
 		var lastAccent = _nextAccent;
@@ -553,7 +553,7 @@ class PsychUIInputText extends FlxSpriteGroup
 		return v;
 	}
 
-	override public function setGraphicSize(width:Int = 0, height:Int = 0)
+	override public function setGraphicSize(width:Float = 0, height:Float = 0)
 	{
 		super.setGraphicSize(width, height);
 		bg.setGraphicSize(width, height);
@@ -562,7 +562,7 @@ class PsychUIInputText extends FlxSpriteGroup
 		{
 			textObj.scale.x = 1;
 			textObj.scale.y = 1;
-			//if(caret != null && caret.exists) caret.setGraphicSize(1, textObj.height - 4);
+			if(caret != null && caret.exists) caret.setGraphicSize(1, textObj.height - 4);
 		}
 	}
 	
