@@ -820,7 +820,7 @@ class TitleState extends MusicBeatState
 		skipVideo.alignment = CENTER;
         skipVideo.screenCenter(X);
         skipVideo.scrollFactor.set();
-		skipVideo.antialiasing = ClientPrefs.data.antialiasing;
+		skipVideo.antialiasing = ClientPrefs.globalAntialiasing;
 		
 		
 		#if VIDEOS_ALLOWED
