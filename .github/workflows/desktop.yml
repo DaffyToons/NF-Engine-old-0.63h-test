@@ -17,7 +17,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [windows-latest, ubuntu-latest]
+        os: [windows-latest]
     steps:
       - name: Checkout
         uses: actions/checkout@main
@@ -26,10 +26,6 @@ jobs:
         uses: krdlab/setup-haxe@v1.5.1
         with:
           haxe-version: 4.2.5
-
-      - name: Install libVLC (Linux)
-        if: startsWith(matrix.os, 'ubuntu')
-        run: sudo apt install libvlc-dev libvlccore-dev
 
       - name: Install Libraries
         run: |
@@ -54,22 +50,10 @@ jobs:
         if: startsWith(matrix.os, 'windows')
         run: haxelib run lime build windows
 
-      - name: Compile (Linux)
-        if: startsWith(matrix.os, 'ubuntu')
-        run: haxelib run lime build linux
-
       - name: Upload Artifact (Windows)
         if: startsWith(matrix.os, 'windows')
         uses: actions/upload-artifact@main
         with:
           name: windowsBuild
           path: export\release\windows\bin\*
-          if-no-files-found: error
-
-      - name: Upload Artifact (Linux)
-        if: startsWith(matrix.os, 'ubuntu')
-        uses: actions/upload-artifact@main
-        with:
-          name: linuxBuild
-          path: export/release/linux/bin/*
           if-no-files-found: error
