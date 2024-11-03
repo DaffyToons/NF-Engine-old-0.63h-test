@@ -24,6 +24,7 @@ import objects.shape.FreeplayShape;
 
 import GameplayChangersSubstate;
 import ResetScoreSubState;
+import flixel.addons.display.FlxBackdrop;
 
 import MainMenuState;
 import PlayState;
@@ -56,6 +57,26 @@ class FreeplayStateNOVA extends MusicBeatState
 
 	var magenta:FlxSprite;
 	var intendedColor:Int;
+
+	var bgMove:FlxBackdrop;
+	public static var Mainbpm:Float = 0;
+	public static var bpm:Float = 0;
+	var SoundTime:Float = 0;
+	var BeatTime:Float = 0;
+	var canBeat:Bool = true;
+	
+	var ColorArray:Array<Int> = [
+		0xFF9400D3,
+		0xFF4B0082,
+		0xFF0000FF,
+		0xFF00FF00,
+		0xFFFFFF00,
+		0xFFFF7F00,
+		0xFFFF0000
+	                                
+	    ];
+	public static var currentColor:Int = 1;    
+	public static var currentColorAgain:Int = 0;
 
 	var smallMag:SpecRect;
 
@@ -181,6 +202,18 @@ class FreeplayStateNOVA extends MusicBeatState
 
 		smallMag = new SpecRect(0, 0, 'menuDesat');
 		add(smallMag);
+
+		bgMove = new FlxBackdrop(Paths.image('mainmenu_sprite/backdrop'), 1, 1, true, true, 0, 0);
+		//bgMove.scrollFactor.set();
+		bgMove.alpha = 0.1;
+		bgMove.color = ColorArray[currentColor];
+		bgMove.screenCenter();
+		bgMove.velocity.set(FlxG.random.bool(50) ? 90 : -90, FlxG.random.bool(50) ? 90 : -90);
+		//bgMove.antialiasing = ClientPrefs.globalAntialiasing;
+		add(bgMove);
+
+		grpSongs = new FlxTypedGroup<Alphabet>();
+		add(grpSongs);
 
 		var infoBG:Rect = new Rect(12, FlxG.height * 0.42, FlxG.width * 0.45 - 12, FlxG.height * 0.15, 20, 20, FlxColor.BLACK, 0.5);
 		add(infoBG);
