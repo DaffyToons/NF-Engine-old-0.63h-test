@@ -170,6 +170,15 @@ class FreeplayStateNOVA extends MusicBeatState
 		magenta.antialiasing = ClientPrefs.globalAntialiasing;
 		add(magenta);
 
+		bgMove = new FlxBackdrop(Paths.image('mainmenu_sprite/backdrop'), 1, 1, true, true, 0, 0);
+		//bgMove.scrollFactor.set();
+		bgMove.alpha = 0.1;
+		bgMove.color = ColorArray[currentColor];
+		bgMove.screenCenter();
+		bgMove.velocity.set(FlxG.random.bool(50) ? 90 : -90, FlxG.random.bool(50) ? 90 : -90);
+		//bgMove.antialiasing = ClientPrefs.globalAntialiasing;
+		add(bgMove);
+
 		var specBG:SpecRectBG = new SpecRectBG(0, 0);
 		specBG.alpha = 0.3;
 		add(specBG);
@@ -202,15 +211,6 @@ class FreeplayStateNOVA extends MusicBeatState
 
 		smallMag = new SpecRect(0, 0, 'menuDesat');
 		add(smallMag);
-
-		bgMove = new FlxBackdrop(Paths.image('mainmenu_sprite/backdrop'), 1, 1, true, true, 0, 0);
-		//bgMove.scrollFactor.set();
-		bgMove.alpha = 0.1;
-		bgMove.color = ColorArray[currentColor];
-		bgMove.screenCenter();
-		bgMove.velocity.set(FlxG.random.bool(50) ? 90 : -90, FlxG.random.bool(50) ? 90 : -90);
-		//bgMove.antialiasing = ClientPrefs.globalAntialiasing;
-		add(bgMove);
 
 		grpSongs = new FlxTypedGroup<Alphabet>();
 		add(grpSongs);
