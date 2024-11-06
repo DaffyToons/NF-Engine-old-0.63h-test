@@ -219,9 +219,6 @@ class FreeplayStateNOVA extends MusicBeatState
 		smallMag = new SpecRect(0, 0, 'menuDesat');
 		add(smallMag);
 
-		grpSongs = new FlxTypedGroup<Alphabet>();
-		add(grpSongs);
-
 		var infoBG:Rect = new Rect(12, FlxG.height * 0.42, FlxG.width * 0.45 - 12, FlxG.height * 0.15, 20, 20, FlxColor.BLACK, 0.5);
 		add(infoBG);
 
