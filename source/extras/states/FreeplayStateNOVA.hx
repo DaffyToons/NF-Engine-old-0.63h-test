@@ -51,12 +51,12 @@ class FreeplayStateNOVA extends MusicBeatState
 	public var sortSongs:Array<SongMetadata> = [];
 
 	var camGame:FlxCamera;
-	var camBG:FlxCamera;
 	var camAudio:FlxCamera;
 	var camUI:FlxCamera;
 	var camHS:FlxCamera;
 
 	var magenta:FlxSprite;
+	var intendedColor:Int;
 
 	var bgMove:FlxBackdrop;
 	public static var Mainbpm:Float = 0;
@@ -77,8 +77,6 @@ class FreeplayStateNOVA extends MusicBeatState
 	    ];
 	public static var currentColor:Int = 1;    
 	public static var currentColorAgain:Int = 0;
-	
-	var intendedColor:Int;
 
 	var smallMag:SpecRect;
 
@@ -172,17 +170,12 @@ class FreeplayStateNOVA extends MusicBeatState
 		magenta.antialiasing = ClientPrefs.globalAntialiasing;
 		add(magenta);
 
-		camBG = new FlxCamera(-FlxG.width);
-		camBG.bgColor = 0x00;
-		FlxG.cameras.add(camBG, false);
-
 		bgMove = new FlxBackdrop(Paths.image('mainmenu_sprite/backdrop'), 1, 1, true, true, 0, 0);
 		//bgMove.scrollFactor.set();
 		bgMove.alpha = 0.1;
 		bgMove.color = ColorArray[currentColor];
 		bgMove.screenCenter();
 		bgMove.velocity.set(FlxG.random.bool(50) ? 90 : -90, FlxG.random.bool(50) ? 90 : -90);
-		bgMove.camera = camBG;
 		//bgMove.antialiasing = ClientPrefs.globalAntialiasing;
 		add(bgMove);
 
