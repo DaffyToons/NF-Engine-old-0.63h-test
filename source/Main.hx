@@ -122,7 +122,6 @@ class Main extends Sprite
 		
 		#if mobile
 		FlxG.scaleMode = new MobileScaleMode();
-		#end
 
 		// shader coords fix
 		FlxG.signals.gameResized.add(function (w, h) {
@@ -139,9 +138,6 @@ class Main extends Sprite
 			if (FlxG.game != null)
 			    resetSpriteCache(FlxG.game);
 		});
-		
-		#if CRASH_HANDLER
-		Lib.current.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, onCrash);
 		#end
 
 		#if desktop
