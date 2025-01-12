@@ -547,8 +547,8 @@ class WeekEditorState extends MusicBeatState
 		var data:String = Json.stringify(weekFile, "\t");
 		if (data.length > 0)
 		{
-			#if android
-			SUtil.saveContent(weekFileName, ".json", data);
+			#if mobile
+			StorageUtil.saveContent(weekFileName + ".json", data);
 			#else
 			_file = new FileReference();
 			_file.addEventListener(Event.COMPLETE, onSaveComplete);
@@ -641,7 +641,7 @@ class WeekEditorFreeplayState extends MusicBeatState
 		addEditorBox();
 		changeSelection();
 
-		#if android
+		#if mobile
 		addVirtualPad(UP_DOWN, NONE);
 		#end
 

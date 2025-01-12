@@ -2,7 +2,7 @@
 <project>
 	<!-- _________________________ Application Settings _________________________ -->
 
-	<app title="Friday Night Funkin' NF Engine" file="NF Engine" packageName="com.NFengine101v2" package="com.NFengine101v2" main="Main" version="1.0.1" company="ShadowMario" />
+	<app title="Friday Night Funkin' NF Engine" file="NF Engine" packageName="com.DaffyandKral.NFengine101v2" package="com.DaffyandKral.NFengine101v2" main="Main" version="1.0.1" company="DaffyandKral" /> <!-- DaffyToons & KralOyuncu -->
 
 	<!--Switch Export with Unique ApplicationID and Icon-->
 	<set name="APP_ID" value="0x0100f6c013bbc000" />
@@ -50,6 +50,7 @@
 	<define name="PSYCH_WATERMARKS"/> <!-- DELETE THIS TO REMOVE WATERMARKS/DEV NAMES ON TITLE SCREEN -->
 	<define name="TITLE_SCREEN_EASTER_EGG" if="officialBuild"/> <!-- DELETE THE if="officialBuild" for enabling this on an unofficial build -->
 	<define name="CRASH_HANDLER" if="desktop release || android" />
+	<architecture name="ARM64" exclude="ARMV7" if="32bits_disabled" /> <!-- Only Arm64 Build Because NF Engine 0.6.3 Doesn't Support 32 bit devices -->
 
 	<assets path="assets/preload" rename="assets" exclude="*.ogg" if="web"/>
 	<assets path="assets/preload" rename="assets" exclude="*.mp3"  unless="web"/>
@@ -105,6 +106,12 @@
 	<assets path="assets/week6"         library="week6"         exclude="*.mp3" unless="web"/>
 	<assets path="assets/week7"         library="week7"         exclude="*.ogg" if="web"/>
 	<assets path="assets/week7"         library="week7"         exclude="*.mp3" unless="web"/>
+	
+	<!-- Mobile Assets -->
+	<assets path="mobile/preload"        rename="assets"                exclude="*.ogg"        if="web"/>
+	<assets path="mobile/preload"        rename="assets"                exclude="*.mp3"       unless="web"/>
+	<assets path="mobile/shared"         rename="assets/shared"         library="shared"        exclude="*.ogg" if="web"/>
+	<assets path="mobile/shared"         rename="assets/shared"         library="shared"        exclude="*.mp3" unless="web"/>
 	
 	<section if="MODS_ALLOWED">
 		<assets path='example_mods' rename='mods' embed='false'/>
@@ -185,14 +192,15 @@
 	<haxedef name="NAPE_RELEASE_BUILD" unless="debug" />
 	
 	<!--Used for Izzy Engine's crash handler-->
-	<haxedef name="HXCPP_CHECK_POINTER" if="CRASH_HANDLER" />
-	<haxedef name="HXCPP_STACK_LINE" if="CRASH_HANDLER" />
-
-	<!-- _________________________________ Android Stuff _______________________________ -->
-	<config:android permission="android.permission.READ_EXTERNAL_STORAGE" if="android"/>
-	<config:android permission="android.permission.WRITE_EXTERNAL_STORAGE" if="android"/>
-  <config:android gradle-version="7.5.1" />
-  <config:android gradle-plugin="7.3.1" />
+	<haxedef name="HXCPP_CHECK_POINTER" />
+	<haxedef name="HXCPP_STACK_LINE" />
+	<haxedef name="HXCPP_STACK_TRACE" />
+	
+	<haxedef name="message.reporting" value="pretty" />
+	<haxedef name='no-deprecation-warnings' />
+	
+	<!-- Do whatever you want I'm tired uninstall and install everytime -->
+	<certificate path="key.keystore" password="psychengine" alias="psychport" alias-password="psychengine" if="android" unless="debug" />
 
 	<!-- _________________________________ Custom _______________________________ -->
 

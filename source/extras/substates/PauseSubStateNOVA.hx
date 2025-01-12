@@ -400,7 +400,7 @@ class PauseSubStateNOVA extends MusicBeatSubstate
 			changeMenuColor();
 		}, 0);
 		
-		#if android
+		#if mobile
 		addVirtualPad(FULL, A);
 		addVirtualPadCamera();
 		#end

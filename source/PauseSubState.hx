@@ -20,7 +20,7 @@ class PauseSubState extends MusicBeatSubstate
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
 
 	var menuItems:Array<String> = [];
-	var menuItemsOG:Array<String> = ['Continue', 'Restart Song', 'Skip Time', 'Botplay', 'Options', 'Change Difficulty' #if android, 'Chart Editor' #end, 'Exit to menu'];
+	var menuItemsOG:Array<String> = ['Continue', 'Restart Song', 'Skip Time', 'Botplay', 'Options', 'Change Difficulty' #if mobile, 'Chart Editor' #end, 'Exit to menu'];
 	var difficultyChoices = [];
 	var curSelected:Int = 0;
 
@@ -129,16 +129,12 @@ class PauseSubState extends MusicBeatSubstate
 		regenMenu();
 		cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
 
-		#if android
+		#if mobile
 		if (PlayState.chartingMode)
-		{
-		        addVirtualPad(FULL, A);
-		}
+		    addVirtualPad(FULL, A);
 		else
-		{
-		        addVirtualPad(FULL, A);
-		}
-		addPadCamera();
+		    addVirtualPad(FULL, A);
+		addVirtualPadCamera();
 		#end
 	}
 

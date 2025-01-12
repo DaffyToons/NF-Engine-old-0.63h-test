@@ -53,7 +53,7 @@ class OptionsState extends MusicBeatState
 
 	function openSelectedSubstate(label:String) {
 		if (label != "Adjust Delay and Combo"){
-			#if android
+			#if mobile
 			removeVirtualPad();
 			#end
 			persistentUpdate = false;
@@ -61,29 +61,14 @@ class OptionsState extends MusicBeatState
 		
 		switch(label) {
 			case 'Note Colors':
-				#if android
-				removeVirtualPad();
-				#end
 				openSubState(new options.NotesSubState());
 			case 'Controls':
-				#if android
-				removeVirtualPad();
-				#end
 				openSubState(new options.ControlsSubState());
 			case 'Graphics':
-				#if android
-				removeVirtualPad();
-				#end
 				openSubState(new options.GraphicsSettingsSubState());
 			case 'Visuals and UI':
-				#if android
-				removeVirtualPad();
-				#end
 				openSubState(new options.VisualsUISubState());
 			case 'Gameplay':
-				#if android
-				removeVirtualPad();
-				#end
 				openSubState(new options.GameplaySettingsSubState());
 			case 'Adjust Delay and Combo':
 				LoadingState.loadAndSwitchState(new options.NoteOffsetState());
@@ -117,19 +102,27 @@ class OptionsState extends MusicBeatState
 		bgMove.velocity.set(FlxG.random.bool(50) ? 90 : -90, FlxG.random.bool(50) ? 90 : -90);
 		//bgMove.antialiasing = ClientPrefs.globalAntialiasing;
 		add(bgMove);
-		#if android
-		tipText = new FlxText(150, FlxG.height - 24, 0, 'Press X to Go In Android Controls Menu', 16);
-			tipText.setFormat("VCR OSD Mono", 17, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-			tipText.borderSize = 1.25;
-			tipText.scrollFactor.set();
-			tipText.antialiasing = ClientPrefs.globalAntialiasing;
-			add(tipText);
-			tipText = new FlxText(150, FlxG.height - 44, 0, 'Press Y to Go In Hitbox Settings Menu', 16);
-			tipText.setFormat("VCR OSD Mono", 17, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-			tipText.borderSize = 1.25;
-			tipText.scrollFactor.set();
-			tipText.antialiasing = ClientPrefs.globalAntialiasing;
-			add(tipText);
+		#if mobile
+		tipText = new FlxText(150, FlxG.height - 24, 0, 'Press X to Go In Mobile Controls Menu', 16);
+		tipText.setFormat("VCR OSD Mono", 17, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		tipText.borderSize = 1.25;
+		tipText.scrollFactor.set();
+		tipText.antialiasing = ClientPrefs.globalAntialiasing;
+		add(tipText);
+		
+		tipText = new FlxText(150, FlxG.height - 44, 0, 'Press Y to Go In Mobile Options Menu', 16);
+		tipText.setFormat("VCR OSD Mono", 17, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		tipText.borderSize = 1.25;
+		tipText.scrollFactor.set();
+		tipText.antialiasing = ClientPrefs.globalAntialiasing;
+		add(tipText);
+		
+		tipText = new FlxText(150, FlxG.height - 64, 0, 'Press E to Go In Extra Key Return Menu', 16);
+		tipText.setFormat("VCR OSD Mono", 17, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		tipText.borderSize = 1.25;
+		tipText.scrollFactor.set();
+		tipText.antialiasing = ClientPrefs.globalAntialiasing;
+		add(tipText);
 		#end	
 		grpOptions = new FlxTypedGroup<Alphabet>();
 		add(grpOptions);	
@@ -150,7 +143,7 @@ class OptionsState extends MusicBeatState
 		changeSelection();
 		ClientPrefs.saveSettings();
 
-		/* #if android
+		/* #if mobile
 		var tipText:FlxText = new FlxText(10, 12, 0, 'Press X to Go In Android Controls Menu', 16);
 		tipText.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		tipText.borderSize = 2;
@@ -167,7 +160,7 @@ class OptionsState extends MusicBeatState
 		changeSelection();
 		ClientPrefs.saveSettings();
 
-		#if android
+		#if mobile
 		addVirtualPad(UP_DOWN, A_B_X_Y);
 		#end
 
@@ -177,7 +170,7 @@ class OptionsState extends MusicBeatState
 	override function closeSubState() {
 		super.closeSubState();
 		ClientPrefs.saveSettings();
-		#if android
+		#if mobile
 		removeVirtualPad();
 		addVirtualPad(UP_DOWN, A_B_X_Y);
 		#end
@@ -192,6 +185,24 @@ class OptionsState extends MusicBeatState
 		}
 		if (controls.UI_DOWN_P) {
 			changeSelection(1);
+		}
+		
+		if (_virtualpad.buttonX.justPressed) {
+		    removeVirtualPad();
+			persistentUpdate = false;
+		    openSubState(new MobileControlSelectSubState());
+		}
+
+		if (_virtualpad.buttonY.justPressed) {
+		    removeVirtualPad();
+			persistentUpdate = false;
+		    openSubState(new MobileOptionsSubState());
+		}
+
+		if (_virtualpad.buttonZ.justPressed) {
+		    removeVirtualPad();
+			persistentUpdate = false;
+		    openSubState(new MobileExtraControl());
 		}
 
 		if (controls.BACK) {
@@ -210,20 +221,6 @@ class OptionsState extends MusicBeatState
 				MusicBeatState.switchState(new MainMenuState());
 			}
 		}
-
-		#if android
-		if (_virtualpad.buttonX.justPressed) {
-			FlxTransitionableState.skipNextTransIn = true;
-			FlxTransitionableState.skipNextTransOut = true;
-			removeVirtualPad();
-			MusicBeatState.switchState(new android.AndroidControlsMenu());
-		}
-		if (_virtualpad.buttonY.justPressed) {
-			removeVirtualPad();
-			persistentUpdate = false;
-			openSubState(new android.HitboxSettingsSubState());
-		}
-		#end
 
 		if (controls.ACCEPT) {
 			openSelectedSubstate(options[curSelected]);

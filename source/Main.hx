@@ -15,6 +15,9 @@ import lime.app.Application;
 #if desktop
 import Discord.DiscordClient;
 #end
+#if mobile
+import mobile.states.CopyState;
+#end
 
 //crash handler stuff
 #if CRASH_HANDLER
@@ -52,8 +55,15 @@ class Main extends Sprite
 	public function new()
 	{
 		super();
+		
+		#if mobile
+		#if android
+		StorageUtil.requestPermissions();
+		#end
+		Sys.setCwd(StorageUtil.getStorageDirectory());
+		#end
+		CrashHandler.init();
 
-    SUtil.gameCrashCheck();
 		if (stage != null)
 		{
 			init();
@@ -76,6 +86,7 @@ class Main extends Sprite
 
 	private function setupGame():Void
 	{
+		#if (openfl <= "9.2.0")
 		var stageWidth:Int = Lib.current.stage.stageWidth;
 		var stageHeight:Int = Lib.current.stage.stageHeight;
 
@@ -87,11 +98,13 @@ class Main extends Sprite
 			game.width = Math.ceil(stageWidth / game.zoom);
 			game.height = Math.ceil(stageHeight / game.zoom);
 		}
-	
-			SUtil.doTheCheck();
+		#else
+		if (game.zoom == -1.0)
+			game.zoom = 1.0;
+		#end
 	
 		ClientPrefs.loadDefaultKeys();
-		addChild(new FlxGame(game.width, game.height, game.initialState, #if (flixel < "5.0.0") game.zoom, #end game.framerate, game.framerate, game.skipSplash, game.startFullscreen));
+		addChild(new FlxGame(game.width, game.height, #if (mobile && MODS_ALLOWED) CopyState.checkExistingFiles() ? game.initialState : CopyState #else game.initialState #end, #if (flixel < "5.0.0") game.zoom, #end game.framerate, game.framerate, game.skipSplash, game.startFullscreen));
 
 		fpsVar = new FPS(10, 3, 0xFFFFFF);
 		addChild(fpsVar);
@@ -107,6 +120,26 @@ class Main extends Sprite
 		FlxG.mouse.visible = false;
 		#end
 		
+		#if mobile
+		FlxG.scaleMode = new MobileScaleMode();
+		#end
+
+		// shader coords fix
+		FlxG.signals.gameResized.add(function (w, h) {
+			if(fpsVar != null)
+				fpsVar.positionFPS(10, 3, Math.min(w / FlxG.width, h / FlxG.height));
+				
+		    if (FlxG.cameras != null) {
+			  for (cam in FlxG.cameras.list) {
+				if (cam != null)
+				  resetSpriteCache(cam.flashSprite);
+			  }
+			}
+
+			if (FlxG.game != null)
+			    resetSpriteCache(FlxG.game);
+		});
+		
 		#if CRASH_HANDLER
 		Lib.current.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, onCrash);
 		#end
@@ -119,6 +152,13 @@ class Main extends Sprite
 			});
 		}
 		#end
+	}
+	
+	static function resetSpriteCache(sprite:Sprite):Void {
+		@:privateAccess {
+		        sprite.__cacheBitmap = null;
+			sprite.__cacheBitmapData = null;
+		}
 	}
 
 	// Code was entirely made by sqirra-rng for their fnf engine named "Izzy Engine", big props to them!!!
