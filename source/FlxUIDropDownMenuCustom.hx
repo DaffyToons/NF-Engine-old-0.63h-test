@@ -39,10 +39,12 @@ The differences are the following:
 class FlxUIDropDownMenuCustom extends FlxUIGroup implements IFlxUIWidget implements IFlxUIClickable implements IHasParams
 {
  
+    #if mobile
     function getVirtualPad():FlxVirtualPad {
       for (th in FlxG.state) if (th is FlxVirtualPad) return cast(th, FlxVirtualPad);
       return null;
     }
+    #end
     
 	public var skipButtonUpdate(default, set):Bool;
 
