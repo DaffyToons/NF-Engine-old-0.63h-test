@@ -20,6 +20,9 @@ import lime.utils.Assets;
 import openfl.utils.Assets as OpenFlAssets;
 import openfl.Lib;
 
+// Crash Handler
+import backend.CrashHandler;
+
 // Mobile Things
 #if mobile
 import mobile.flixel.*;

@@ -68,16 +68,14 @@ class MobileOptionsSubState extends BaseOptionsMenu
 		    virtualpadSkinList = CoolUtil.coolTextFile(Paths.mods('virtualpad/virtualpadSkinList.txt'));
 		#end
 		
-		if (ClientPrefs.VirtualPadAlpha != 0) {
-    		var option:Option = new Option('VirtualPad Skin',
-    			"Choose VirtualPad Skin",
-    			'VirtualPadSkin',
-    			'string',
-    			'original',
-    			virtualpadSkinList);
-    		addOption(option);
-    		option.onChange = resetVirtualPad;
-	    }
+    	var option:Option = new Option('VirtualPad Skin',
+    		"Choose VirtualPad Skin",
+    		'VirtualPadSkin',
+    		'string',
+    		'original',
+    		virtualpadSkinList);
+    	addOption(option);
+    	option.onChange = resetVirtualPad;
 		
 		var option:Option = new Option('VirtualPad Alpha:',
 			'Changes VirtualPad Alpha -cool feature',
@@ -96,7 +94,6 @@ class MobileOptionsSubState extends BaseOptionsMenu
 		addOption(option);
 		super();
 		
-	if (ClientPrefs.VirtualPadAlpha != 0) {
 	    var option:Option = new Option('Colored VirtualPad',
 			'If unchecked, disables VirtualPad colors\n(can be used to make custom colored VirtualPad)',
 			'coloredvpad',
@@ -124,70 +121,69 @@ class MobileOptionsSubState extends BaseOptionsMenu
 		option.changeValue = 1;
 		option.decimals = 1;
 		addOption(option);
-	}
 		
-	var option:Option = new Option('Extra Control Location:',
-		"Choose Extra Control Location",
-		'hitboxLocation',
-		'string',
-		'Bottom',
-		['Bottom', 'Top', 'Middle']);
-	addOption(option);
-		  
-	var option:Option = new Option('Hitbox Mode:',
-		"Choose your Hitbox Style!  -mariomaster",
-		'hitboxmode',
-		'string',
-		'New',
-		['Classic', 'New']);
-	addOption(option);
-		  
-	var option:Option = new Option('Hitbox Design:',
-		"Choose how your hitbox should look like.",
-		'hitboxtype',
-		'string',
-		'Gradient',
-		['Gradient', 'No Gradient' , 'No Gradient (Old)']);
-	addOption(option);
-
-	var option:Option = new Option('Hitbox Hint',
-		'Hitbox Hint -I hate this',
-		'hitboxhint',
-		'bool',
-		false);
-	addOption(option);
-		
-	var option:Option = new Option('Hitbox Opacity', //mariomaster was here again
-		'Changes hitbox opacity -omg',
-		'hitboxalpha',
-		'float',
-		0.7);
-	option.scrollSpeed = 1.6;
-	option.minValue = 0.0;
-	option.maxValue = 1;
-	option.changeValue = 0.1;
-	option.decimals = 1;
-	addOption(option);
-		
-	#if mobile
-	var option:Option = new Option('Wide Screen Mode',
-		'If checked, The game will stetch to fill your whole screen. (WARNING: Can result in bad visuals & break some mods that resizes the game/cameras)',
-		'wideScreen',
-		'bool',
-		false);
-	option.onChange = () -> FlxG.scaleMode = new MobileScaleMode();
-	addOption(option);
-	#end
-		
-	#if android
-	var option:Option = new Option('Storage Type',
-		'Which folder Psych Engine should use?',
-		'storageType',
-		'string',
-		'EXTERNAL_DATA',
-		storageTypes);
-		addOption(option);
-	#end
+    	var option:Option = new Option('Extra Control Location:',
+    		"Choose Extra Control Location",
+    		'hitboxLocation',
+    		'string',
+    		'Bottom',
+    		['Bottom', 'Top', 'Middle']);
+    	addOption(option);
+    		  
+    	var option:Option = new Option('Hitbox Mode:',
+    		"Choose your Hitbox Style!  -mariomaster",
+    		'hitboxmode',
+    		'string',
+    		'New',
+    		['Classic', 'New']);
+    	addOption(option);
+    		  
+    	var option:Option = new Option('Hitbox Design:',
+    		"Choose how your hitbox should look like.",
+    		'hitboxtype',
+    		'string',
+    		'Gradient',
+    		['Gradient', 'No Gradient' , 'No Gradient (Old)']);
+    	addOption(option);
+    
+    	var option:Option = new Option('Hitbox Hint',
+    		'Hitbox Hint -I hate this',
+    		'hitboxhint',
+    		'bool',
+    		false);
+    	addOption(option);
+    		
+    	var option:Option = new Option('Hitbox Opacity', //mariomaster was here again
+    		'Changes hitbox opacity -omg',
+    		'hitboxalpha',
+    		'float',
+    		0.7);
+    	option.scrollSpeed = 1.6;
+    	option.minValue = 0.0;
+    	option.maxValue = 1;
+    	option.changeValue = 0.1;
+    	option.decimals = 1;
+    	addOption(option);
+    		
+    	#if mobile
+    	var option:Option = new Option('Wide Screen Mode',
+    		'If checked, The game will stetch to fill your whole screen. (WARNING: Can result in bad visuals & break some mods that resizes the game/cameras)',
+    		'wideScreen',
+    		'bool',
+    		false);
+    	option.onChange = () -> FlxG.scaleMode = new MobileScaleMode();
+    	addOption(option);
+    	#end
+    		
+    	#if android
+    	var option:Option = new Option('Storage Type',
+    		'Which folder Psych Engine should use?',
+    		'storageType',
+    		'string',
+    		'EXTERNAL_DATA',
+    		storageTypes);
+    		addOption(option);
+    	#end
 
 		super();
 	}
