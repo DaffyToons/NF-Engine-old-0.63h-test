@@ -18,13 +18,13 @@ class StorageUtil
 	// root directory, used for handling the saved storage type and path
 	public static final rootDir:String = LimeSystem.applicationStorageDirectory;
 
-	public static function getStorageDirectory(?force:Bool = false):String
+	public static function getStorageDirectory(?force:Bool = false, ?forcedType:String = null):String
 	{
 		var daPath:String = '';
 		#if android
 		if (!FileSystem.exists(rootDir + 'storagetype.txt'))
 			File.saveContent(rootDir + 'storagetype.txt', ClientPrefs.storageType);
-		var curStorageType:String = File.getContent(rootDir + 'storagetype.txt');
+		var curStorageType:String = File.getContent(rootDir + forcedType != null ? forcedType : 'storagetype.txt');
 		daPath = force ? StorageType.fromStrForce(curStorageType) : StorageType.fromStr(curStorageType);
 		daPath = Path.addTrailingSlash(daPath);
 		#elseif ios
@@ -156,7 +156,7 @@ class StorageUtil
 enum abstract StorageType(String) from String to String
 {
     final forcedPath = '/storage/emulated/0/';
-	final packageNameLocal = 'com.kraloyuncu.nfengine063modified';
+	final packageNameLocal = 'com.DaffyandKral.NFengine101v2';
 	final fileLocalONLINE = 'PsychOnline';
 	final fileLocal = 'NF Engine';
 	final fileLocalPE = 'PsychEngine';
