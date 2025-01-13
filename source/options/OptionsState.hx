@@ -187,6 +187,7 @@ class OptionsState extends MusicBeatState
 			changeSelection(1);
 		}
 		
+		#if mobile
 		if (_virtualpad.buttonX.justPressed) {
 		    removeVirtualPad();
 			persistentUpdate = false;
@@ -204,6 +205,7 @@ class OptionsState extends MusicBeatState
 			persistentUpdate = false;
 		    openSubState(new MobileExtraControl());
 		}
+		#end
 
 		if (controls.BACK) {
 			if (PauseSubState.MoveOption) {

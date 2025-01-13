@@ -2043,7 +2043,7 @@ class ChartingState extends MusicBeatState
 
 				var holdingShift:Float = 1;
 				if (FlxG.keys.pressed.CONTROL) holdingShift = 0.25;
-				else if (_virtualpad.buttonY.pressed || FlxG.keys.pressed.SHIFT) holdingShift = 4;
+				else if (#if mobile _virtualpad.buttonY.pressed || #end FlxG.keys.pressed.SHIFT) holdingShift = 4;
 				var daTime:Float = 700 * FlxG.elapsed * holdingShift;
 
 				if (FlxG.keys.pressed.W #if mobile || _virtualpad.buttonUp.pressed #end)
