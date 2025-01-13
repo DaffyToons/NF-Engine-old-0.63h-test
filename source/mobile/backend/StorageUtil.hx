@@ -163,6 +163,7 @@ enum abstract StorageType(String) from String to String
 	final fileLocalEX = 'Psych Extended'; //Fun Fact: Psych Extended v1.0.2 is officially cancelled because everything is done
 
 	var EXTERNAL_DATA = "EXTERNAL_DATA";
+	var SAVE_FOLDER = "SAVE_FOLDER";
 	var EXTERNAL_OBB = "EXTERNAL_OBB";
 	var EXTERNAL_MEDIA = "EXTERNAL_MEDIA";
 	var EXTERNAL = "EXTERNAL";
@@ -173,6 +174,7 @@ enum abstract StorageType(String) from String to String
 	public static function fromStr(str:String):StorageType
 	{
 		final EXTERNAL_DATA = AndroidContext.getExternalFilesDir();
+		final SAVE_FOLDER = AndroidContext.getExternalFilesDir();
 		final EXTERNAL_OBB = AndroidContext.getObbDir();
 		final EXTERNAL_MEDIA = AndroidEnvironment.getExternalStorageDirectory() + '/Android/media/' + lime.app.Application.current.meta.get('packageName');
 		final EXTERNAL = AndroidEnvironment.getExternalStorageDirectory() + '/.' + fileLocal;
@@ -183,6 +185,7 @@ enum abstract StorageType(String) from String to String
 		return switch (str)
 		{
 			case "EXTERNAL_DATA": EXTERNAL_DATA;
+			case "SAVE_FOLDER": SAVE_FOLDER;
 			case "EXTERNAL_OBB": EXTERNAL_OBB;
 			case "EXTERNAL_MEDIA": EXTERNAL_MEDIA;
 			case "EXTERNAL": EXTERNAL;
@@ -196,6 +199,7 @@ enum abstract StorageType(String) from String to String
 	public static function fromStrForce(str:String):StorageType
 	{
 		final EXTERNAL_DATA = forcedPath + 'Android/data/' + packageNameLocal + '/files';
+		final SAVE_FOLDER = forcedPath + 'Android/data/' + packageNameLocal + '/data';
 		final EXTERNAL_OBB = forcedPath + 'Android/obb/' + packageNameLocal;
 		final EXTERNAL_MEDIA = forcedPath + 'Android/media/' + packageNameLocal;
 		final EXTERNAL_ONLINE = forcedPath + '.' + fileLocalONLINE;
@@ -207,6 +211,7 @@ enum abstract StorageType(String) from String to String
 		{
 			
 			case "EXTERNAL_DATA": EXTERNAL_DATA;
+			case "SAVE_FOLDER": SAVE_FOLDER;
 			case "EXTERNAL_OBB": EXTERNAL_OBB;
 			case "EXTERNAL_MEDIA": EXTERNAL_MEDIA;
 			case "EXTERNAL": EXTERNAL;
