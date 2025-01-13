@@ -161,7 +161,7 @@ class OptionsState extends MusicBeatState
 		ClientPrefs.saveSettings();
 
 		#if mobile
-		addVirtualPad(UP_DOWN, A_B_X_Y);
+		addVirtualPad(UP_DOWN, A_B_X_Y_Z);
 		#end
 
 		super.create();
@@ -172,7 +172,7 @@ class OptionsState extends MusicBeatState
 		ClientPrefs.saveSettings();
 		#if mobile
 		removeVirtualPad();
-		addVirtualPad(UP_DOWN, A_B_X_Y);
+		addVirtualPad(UP_DOWN, A_B_X_Y_Z);
 		#end
 		persistentUpdate = true;
 	}

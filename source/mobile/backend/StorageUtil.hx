@@ -156,7 +156,7 @@ class StorageUtil
 enum abstract StorageType(String) from String to String
 {
     final forcedPath = '/storage/emulated/0/';
-	final packageNameLocal = 'com.DaffyandKral.NFengine101v2';
+	final packageNameLocal = 'com.DaffyToons.NFengine101v2';
 	final fileLocalONLINE = 'PsychOnline';
 	final fileLocal = 'NF Engine';
 	final fileLocalPE = 'PsychEngine';
@@ -174,7 +174,6 @@ enum abstract StorageType(String) from String to String
 	public static function fromStr(str:String):StorageType
 	{
 		final EXTERNAL_DATA = AndroidContext.getExternalFilesDir();
-		final SAVE_FOLDER = AndroidContext.getExternalFilesDir();
 		final EXTERNAL_OBB = AndroidContext.getObbDir();
 		final EXTERNAL_MEDIA = AndroidEnvironment.getExternalStorageDirectory() + '/Android/media/' + lime.app.Application.current.meta.get('packageName');
 		final EXTERNAL = AndroidEnvironment.getExternalStorageDirectory() + '/.' + fileLocal;
@@ -185,7 +184,6 @@ enum abstract StorageType(String) from String to String
 		return switch (str)
 		{
 			case "EXTERNAL_DATA": EXTERNAL_DATA;
-			case "SAVE_FOLDER": SAVE_FOLDER;
 			case "EXTERNAL_OBB": EXTERNAL_OBB;
 			case "EXTERNAL_MEDIA": EXTERNAL_MEDIA;
 			case "EXTERNAL": EXTERNAL;
@@ -199,7 +197,7 @@ enum abstract StorageType(String) from String to String
 	public static function fromStrForce(str:String):StorageType
 	{
 		final EXTERNAL_DATA = forcedPath + 'Android/data/' + packageNameLocal + '/files';
-		final SAVE_FOLDER = forcedPath + 'Android/data/' + packageNameLocal + '/data';
+		final SAVE_FOLDER = forcedPath + 'Android/data/' + packageNameLocal + '/saves';
 		final EXTERNAL_OBB = forcedPath + 'Android/obb/' + packageNameLocal;
 		final EXTERNAL_MEDIA = forcedPath + 'Android/media/' + packageNameLocal;
 		final EXTERNAL_ONLINE = forcedPath + '.' + fileLocalONLINE;
@@ -209,7 +207,6 @@ enum abstract StorageType(String) from String to String
 
 		return switch (str)
 		{
-			
 			case "EXTERNAL_DATA": EXTERNAL_DATA;
 			case "SAVE_FOLDER": SAVE_FOLDER;
 			case "EXTERNAL_OBB": EXTERNAL_OBB;
