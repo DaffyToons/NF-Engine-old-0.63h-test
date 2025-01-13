@@ -24,8 +24,8 @@ class StorageUtil
 		#if android
 		if (!FileSystem.exists(rootDir + 'storagetype.txt'))
 			File.saveContent(rootDir + 'storagetype.txt', ClientPrefs.storageType);
-		var curStorageType:String = File.getContent(rootDir + forcedType != null ? forcedType : 'storagetype.txt');
-		daPath = force ? StorageType.fromStrForce(curStorageType) : StorageType.fromStr(curStorageType);
+		var curStorageType:String = File.getContent(rootDir + 'storagetype.txt');
+		daPath = force ? StorageType.fromStrForce(forcedType != null ? forcedType : curStorageType) : StorageType.fromStr(forcedType != null ? forcedType : curStorageType);
 		daPath = Path.addTrailingSlash(daPath);
 		#elseif ios
 		daPath = LimeSystem.documentsDirectory;

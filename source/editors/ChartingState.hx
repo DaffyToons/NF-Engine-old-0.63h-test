@@ -1627,7 +1627,7 @@ class ChartingState extends MusicBeatState
 		
 		AutoSaveTime = AutoSaveTime + elapsed;
 		
-		if ( AutoSaveTime > 60 && AutoSaveChart && !FlxG.sound.music.playing && (!FlxG.keys.pressed.W || !FlxG.keys.pressed.S #if android || !_virtualpad.buttonUp.pressed || !_virtualpad.buttonDown.pressed #end))  {
+		if ( AutoSaveTime > 60 && AutoSaveChart && !FlxG.sound.music.playing && (!FlxG.keys.pressed.W || !FlxG.keys.pressed.S #if mobile || !_virtualpad.buttonUp.pressed || !_virtualpad.buttonDown.pressed #end))  {
 		    AutoSaveTime = 0;
 		    AutoSaveLevel();				
 		    autosaveTxt.alpha = 1;
