@@ -2,7 +2,7 @@
 <project>
 	<!-- _________________________ Application Settings _________________________ -->
 
-	<app title="Friday Night Funkin' NF Engine" file="NF Engine" packageName="com.DaffyToons.NFengine101v2" package="com.DaffyToons.NFengine101v2" main="Main" version="1.0.1" company="DaffyToons" /> <!-- DaffyToons & KralOyuncu -->
+	<app title="Friday Night Funkin' NF Engine" file="NF Engine" packageName="com.NFengine101v2" package="com.NFengine101v2" main="Main" version="1.0.1" company="DaffyToons" /> <!-- DaffyToons & KralOyuncu -->
 
 	<!--Switch Export with Unique ApplicationID and Icon-->
 	<set name="APP_ID" value="0x0100f6c013bbc000" />

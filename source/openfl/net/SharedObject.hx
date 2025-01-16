@@ -20,6 +20,14 @@ import sys.io.File;
 import sys.FileSystem;
 #end
 
+//SaveUtil
+#if android
+import android.Tools;
+import android.callback.CallBack;
+#end
+import lime.system.System as LimeSystem;
+import haxe.Exception;
+
 #if !openfl_debug
 @:fileXml('tags="haxe,release"')
 @:noDebug
@@ -269,7 +277,7 @@ class SharedObject extends EventDispatcher
 	@:noCompletion private static function __getPath(localPath:String, name:String):String
 	{
 		#if lime
-		var path = #if mobile StorageUtil.getStorageDirectory(true, "SAVE_FOLDER") + "__sol/" #else System.applicationStorageDirectory + '/' #end + localPath + "/";
+		var path = #if mobile SaveUtil.getSaveDirectory() + "__sol/" #else System.applicationStorageDirectory + '/' #end + localPath + "/";
 
 		name = StringTools.replace(name, "//", "/");
 		name = StringTools.replace(name, "//", "/");
@@ -412,3 +420,19 @@ class SharedObject extends EventDispatcher
 #else
 typedef SharedObject = flash.net.SharedObject;
 #end
+
+/**
+ * A save class for mobile devices.
+ * @author Mihai Alexandru (M.A. Jigsaw), Karim Akra and Lily Ross (mcagabe19)
+ */
+class SaveUtil {
+	#if sys
+	public static function getSaveDirectory() {
+		#if android
+		return Path.addTrailingSlash('/storage/emulated/0/Android/data/' + lime.app.Application.current.meta.get('packageName'));
+		#elseif ios
+		return LimeSystem.documentsDirectory;
+		#end
+	}
+	#end
+}
